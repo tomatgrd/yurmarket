@@ -1,0 +1,2415 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="color-scheme" content="light only">
+<meta name="author" content="Кочуров Владислав Андреевич">
+<meta name="copyright" content="© 2026 Кочуров Владислав Андреевич. Все права защищены.">
+<title>ЮрМаркет</title>
+<!--
+  Подтверждение авторства (SHA-256 commitment hash):
+  3797dd8fd1f8ae1f76b86ad9ac5b9965833614b75324892094088d04def69811
+  Правообладатель: Кочуров Владислав Андреевич.
+  Секретное значение, из которого получен этот хеш, хранится отдельно у правообладателя
+  и не публикуется вместе с кодом. При необходимости подтверждения авторства оно
+  предъявляется, и соответствие хешу проверяется публично (SHA-256 от строки
+  "YURMARKET-KOCHUROV-VA:<секрет>").
+-->
+<style>body{font-family:system-ui,-apple-system,"Segoe UI",Arial,sans-serif}</style>
+<style>
+
+  :root{
+    color-scheme: light only;
+    --ink:#1A1F2E;
+    --paper:#F3F0E9;
+    --brass:#B08D57;
+    --brass-dark:#8E7040;
+    --slate:#3D4759;
+    --slate-light:#8B8F97;
+    --white:#FFFFFF;
+    --green:#2C5F4A;
+    --line:#E3DFD3;
+    --chip-bg:#EFECE3;
+    --radius:6px;
+    --yc-build-sig:"3797dd8fd1f8ae1f76b86ad9ac5b9965833614b75324892094088d04def69811";
+  }
+
+  *{box-sizing:border-box; margin:0; padding:0;}
+
+  html{background:var(--paper); color-scheme: light only;}
+
+  body{
+    background:var(--paper) !important;
+    color:var(--ink);
+    font-family:'Inter',sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+
+  h1,h2,.serif{font-family:'Tinos', Georgia, serif; font-weight:700;}
+
+  a{color:inherit; text-decoration:none;}
+  button{font-family:inherit; cursor:pointer; border:none; background:none;}
+  input, select{font-family:inherit; font-size:inherit; background-color:transparent; color:inherit;}
+  :focus-visible{outline:2px solid var(--brass); outline-offset:2px;}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.001ms !important; transition-duration:0.001ms !important;}
+  }
+
+  .wrap{max-width:1120px; margin:0 auto; padding:0 40px;}
+
+  /* ---------- Header ---------- */
+
+  header{
+    border-bottom:1px solid var(--line);
+    background:var(--paper);
+    position:sticky; top:0; z-index:50;
+  }
+
+  .header-inner{
+    display:flex; align-items:center; justify-content:space-between;
+    gap:10px;
+    padding:12px 40px;
+    max-width:1120px; margin:0 auto;
+  }
+
+  .logo-group{display:flex; align-items:center; gap:8px; min-width:0; flex-shrink:1; cursor:pointer;}
+  .logo-icon{
+    width:36px; height:36px;
+    background:var(--ink);
+    border-radius:8px;
+    display:flex; align-items:center; justify-content:center;
+    font-size:17px;
+    flex-shrink:0;
+  }
+  .logo-text{font-family:'Tinos', serif; font-weight:700; font-size:17px; white-space:nowrap;}
+  .logo-text .accent{color:var(--brass);}
+
+  .header-actions{display:flex; gap:6px; align-items:center; flex-shrink:0;}
+
+  .header-nav{display:flex; gap:4px; flex-shrink:0; margin-left:4px;}
+  .header-nav-btn{
+    font-size:13px; font-weight:500;
+    color:var(--slate);
+    padding:7px 12px;
+    border-radius:var(--radius);
+    white-space:nowrap;
+    transition:background .15s, color .15s;
+  }
+  .header-nav-btn:hover{background:var(--chip-bg); color:var(--ink);}
+
+  @media (max-width: 860px){
+    .header-nav{display:none;}
+  }
+
+  .header-quote{
+    flex:1;
+    min-width:0;
+    text-align:center;
+    padding:0 28px;
+    font-family:'Tinos', serif;
+    font-style:italic;
+    font-weight:600;
+    font-size:13.5px;
+    color:var(--brass-dark);
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+    opacity:0;
+    transition:opacity .45s ease;
+  }
+  .header-quote.show{opacity:1;}
+
+  @media (max-width: 860px){
+    .header-quote{display:none;}
+  }
+
+  .btn{
+    display:inline-flex; align-items:center; gap:6px;
+    padding:8px 14px;
+    font-size:13px; font-weight:500;
+    border-radius:var(--radius);
+    transition:background .15s, color .15s, border-color .15s, opacity .15s;
+    white-space:nowrap;
+  }
+  .btn-primary{background:var(--ink); color:var(--paper);}
+  .btn-primary:hover{opacity:.85;}
+  .btn-outline{color:var(--ink); border:1px solid var(--line);}
+  .btn-outline:hover{border-color:var(--ink);}
+  .btn-sm{padding:7px 12px; font-size:12.5px;}
+
+  /* ---------- Hero ---------- */
+
+  .hero-row{display:flex; align-items:flex-start; gap:20px;}
+  .hero-reel-col{flex:0 0 170px; margin-top:36px;}
+  .hero-row .hero{flex:1; min-width:0;}
+  .hero-spacer{flex:0 0 170px;}
+
+  @media (max-width: 900px){
+    .hero-row{flex-direction:column; align-items:center; gap:8px;}
+    .hero-reel-col{margin-top:24px;}
+    .hero-spacer{display:none;}
+  }
+
+  .hero{padding:56px 0 40px; text-align:center;}
+
+  .hero-eyebrow{
+    font-size:12.5px; color:var(--brass-dark);
+    letter-spacing:.06em;
+    margin-bottom:22px;
+    display:flex; align-items:center; justify-content:center; gap:14px;
+    font-weight:600;
+  }
+  .hero-eyebrow .rule{width:36px; height:1px; background:var(--brass);}
+
+  .hero h1{
+    font-size:42px; line-height:1.2;
+    margin:0 auto 22px;
+    max-width:680px;
+  }
+  .hero h1 .cursive{
+    display:block;
+    font-style:italic;
+    font-weight:400;
+    color:var(--brass);
+  }
+
+  .hero p.lede{
+    font-size:16.5px; color:var(--slate);
+    max-width:480px;
+    margin:0 auto 36px;
+  }
+
+  /* ---------- Search ---------- */
+
+  .search-wrap{max-width:720px; margin:0 auto;}
+
+  .search-bar{
+    display:flex;
+    background:var(--white);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    overflow:hidden;
+  }
+  .search-bar input{
+    flex:1;
+    border:none; outline:none; background:none;
+    padding:0 20px;
+    font-size:15px; color:var(--ink);
+  }
+  .search-bar input::placeholder{color:var(--slate-light);}
+  .search-bar button{
+    background:var(--ink); color:var(--white);
+    padding:0 26px;
+    font-size:14.5px; font-weight:500;
+    display:flex; align-items:center; gap:8px;
+    transition:opacity .15s;
+    flex-shrink:0;
+  }
+  .search-bar button:hover{opacity:.85;}
+  .search-bar{height:60px;}
+
+  .filter-row{
+    display:flex; gap:10px;
+    margin-top:12px;
+    flex-wrap:wrap;
+  }
+  .filter-chip{
+    position:relative;
+    display:flex; align-items:center; gap:8px;
+    background:var(--white);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:11px 18px;
+    font-size:14px; color:var(--ink);
+    transition:border-color .15s;
+    cursor:pointer;
+  }
+  .filter-chip:hover{border-color:var(--brass);}
+  .filter-chip .chip-icon, .filter-chip .chip-text{pointer-events:none;}
+  .filter-chip .chip-text.chip-active{color:var(--ink); font-weight:600;}
+  .filter-chip select{
+    position:absolute; inset:0;
+    width:100%; height:100%;
+    opacity:0;
+    border:none; outline:none;
+    font-size:14px;
+    appearance:none;
+    cursor:pointer;
+  }
+
+  /* ---------- Tag groups ---------- */
+
+  .tag-groups{max-width:900px; margin:44px auto 0;}
+  .tag-group-label{
+    font-size:12px; letter-spacing:.06em; color:var(--slate-light);
+    margin-bottom:14px; text-align:left; font-weight:600;
+  }
+  .tag-flow{display:flex; flex-wrap:wrap; gap:10px; margin-bottom:32px; justify-content:flex-start;}
+  .practice-tag{
+    background:var(--chip-bg);
+    border:1px solid var(--line);
+    padding:10px 18px;
+    border-radius:22px;
+    font-size:14.5px;
+    color:var(--ink);
+    cursor:pointer;
+    transition:background .15s, border-color .15s;
+  }
+  .practice-tag:hover{background:var(--white); border-color:var(--brass);}
+
+  /* ---------- Section ---------- */
+
+  .section{padding:40px 0 56px;}
+  #video-section{padding:24px 0 20px;}
+  #video-section .section-head{margin-bottom:14px;}
+  #video-section h2{font-size:18px;}
+  .section-head{
+    display:flex; justify-content:space-between; align-items:center;
+    margin-bottom:20px;
+  }
+  .section-head h2{font-size:24px;}
+  .results-count{font-size:14px; color:var(--slate);}
+  .results-count b{color:var(--ink);}
+
+  .sort-select{
+    font-size:13.5px; color:var(--slate);
+    border:1px solid var(--line);
+    background:var(--white);
+    padding:9px 14px;
+    border-radius:var(--radius);
+  }
+
+  /* ---------- News ticker ---------- */
+
+  .news-ticker{
+    background:#2A2117;
+    overflow:hidden;
+    white-space:nowrap;
+    padding:13px 0;
+  }
+  .news-ticker-track{
+    display:inline-flex;
+    align-items:center;
+    animation:tickerScroll 50s linear infinite;
+    will-change:transform;
+  }
+  .news-ticker:hover .news-ticker-track{animation-play-state:paused;}
+  .ticker-item{display:inline-flex; align-items:center; gap:10px; padding:0 26px; flex-shrink:0; cursor:pointer; transition:opacity .15s;}
+  .ticker-item:hover{opacity:.75;}
+  .ticker-tag{
+    font-size:10.5px; font-weight:700; letter-spacing:.04em;
+    padding:3px 9px; border-radius:4px;
+    flex-shrink:0;
+  }
+  .ticker-tag.world{background:rgba(255,255,255,0.14); color:var(--paper);}
+  .ticker-tag.ru{background:var(--brass); color:var(--ink);}
+  .ticker-icon{font-size:14px; flex-shrink:0;}
+  .ticker-text{font-size:13.5px; color:var(--paper); opacity:.9; white-space:nowrap;}
+  .ticker-text b{color:var(--brass); font-weight:600; opacity:1;}
+  .ticker-sep{color:var(--slate-light); opacity:.4;}
+
+  @keyframes tickerScroll{
+    from{transform:translateX(0);}
+    to{transform:translateX(-50%);}
+  }
+
+  @media (max-width: 720px){
+    .ticker-item{padding:0 18px; gap:8px;}
+    .ticker-text{font-size:13px;}
+  }
+
+  /* ---------- Video / podcasts section ---------- */
+
+  .video-row{display:flex; gap:16px; overflow-x:auto; padding-bottom:6px;}
+  .video-card{
+    flex:0 0 240px;
+    cursor:pointer;
+    border:1px solid var(--line);
+    border-radius:10px;
+    overflow:hidden;
+    background:var(--white);
+    transition:border-color .15s;
+  }
+  .video-card:hover{border-color:var(--brass);}
+  .video-card-thumb{
+    background:var(--chip-bg);
+    aspect-ratio:16/9;
+    display:flex; align-items:center; justify-content:center;
+    font-size:30px;
+    color:var(--slate-light);
+  }
+  .video-card-body{padding:14px 16px;}
+  .video-card-type{font-size:11px; font-weight:600; letter-spacing:.03em; color:var(--brass-dark); text-transform:uppercase; margin-bottom:5px;}
+  .video-card-title{font-size:13.5px; color:var(--ink); line-height:1.4;}
+
+  .video-placeholder{
+    background:var(--chip-bg);
+    border:1px dashed var(--line);
+    border-radius:var(--radius);
+    aspect-ratio:16/9;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    gap:8px;
+    color:var(--slate-light);
+    font-size:13px; font-weight:500;
+    margin-bottom:18px;
+  }
+  .video-placeholder-icon{font-size:32px;}
+
+  .video-grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(220px,1fr)); gap:16px;}
+
+  /* ---------- Article / news / video pages ---------- */
+
+  .back-link{display:inline-block; margin-bottom:20px; font-size:13.5px; color:var(--slate); cursor:pointer; font-weight:500;}
+  .back-link:hover{color:var(--ink);}
+
+  .article-list{background:var(--white); border:1px solid var(--line); border-radius:10px; overflow:hidden;}
+  .article-row{padding:18px 20px; border-bottom:1px solid var(--line); cursor:pointer; transition:background .12s;}
+  .article-row:last-child{border-bottom:none;}
+  .article-row:hover{background:#FBFAF7;}
+  .article-row-top{display:flex; justify-content:space-between; align-items:center; gap:10px; margin-bottom:6px; flex-wrap:wrap;}
+  .article-row-org{font-size:12.5px; font-weight:600; color:var(--brass-dark);}
+  .article-row-date{font-size:11.5px; color:var(--slate-light);}
+  .article-row-title{font-size:14.5px; color:var(--ink); line-height:1.4;}
+
+  .article-page-title{font-family:'Tinos', serif; font-size:26px; font-weight:700; margin:12px 0 22px; max-width:720px; line-height:1.3;}
+  .article-page-body{font-size:15px; color:var(--slate); line-height:1.7; max-width:720px;}
+
+  /* ---------- Reel widget (TikTok/Reels-style preview) ---------- */
+
+  .reel-widget{max-width:170px; margin:0;}
+  .reel-card{
+    position:relative;
+    aspect-ratio:3/4;
+    border-radius:14px;
+    overflow:hidden;
+    background:#1A1F2E;
+    cursor:pointer;
+  }
+  .reel-thumb{
+    position:absolute; inset:0;
+    display:flex; align-items:center; justify-content:center;
+    font-size:32px;
+    color:rgba(255,255,255,0.3);
+  }
+  .reel-overlay{
+    position:absolute; left:0; right:0; bottom:0;
+    padding:12px 10px 14px;
+    background:linear-gradient(to top, rgba(0,0,0,0.85), rgba(0,0,0,0));
+    color:#fff;
+  }
+  .reel-tag{font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:.03em; color:var(--brass); margin-bottom:5px;}
+  .reel-title{font-size:11.5px; font-weight:600; line-height:1.35; margin-bottom:7px; display:-webkit-box; -webkit-line-clamp:3; -webkit-box-orient:vertical; overflow:hidden;}
+  .reel-meta{display:flex; align-items:center; gap:8px; font-size:10px; opacity:.9; flex-wrap:wrap;}
+  .reel-rec{color:var(--brass); font-weight:600;}
+  .reel-nav{
+    position:absolute; top:50%; transform:translateY(-50%);
+    width:24px; height:24px; border-radius:50%;
+    background:rgba(0,0,0,0.35); color:#fff;
+    display:flex; align-items:center; justify-content:center;
+    font-size:14px;
+  }
+  .reel-nav:hover{background:rgba(0,0,0,0.55);}
+  .reel-prev{left:6px;}
+  .reel-next{right:6px;}
+  .reel-dots{display:flex; justify-content:center; gap:5px; margin-top:10px;}
+  .reel-dot{width:6px; height:6px; border-radius:50%; background:var(--line); transition:width .2s, background .2s;}
+  .reel-dot.active{background:var(--brass); width:18px; border-radius:3px;}
+
+  /* ---------- Lawyer cards ---------- */
+
+  .lawyer-list{
+    background:var(--white);
+    border:1px solid var(--line);
+    border-radius:10px;
+    overflow:hidden;
+  }
+
+  .lawyer-card{
+    display:flex;
+    gap:18px;
+    padding:26px 28px;
+    border-bottom:1px solid var(--line);
+    align-items:flex-start;
+    transition:background .12s;
+    cursor:pointer;
+  }
+  .lawyer-card:last-child{border-bottom:none;}
+  .lawyer-card:hover{background:#FBFAF7;}
+
+  .avatar{
+    width:56px; height:56px;
+    border-radius:50%;
+    background:#F3DFA8;
+    display:flex; align-items:center; justify-content:center;
+    font-size:26px;
+    flex-shrink:0;
+  }
+
+  .lawyer-body{flex:1; min-width:0;}
+
+  .name-row{display:flex; align-items:center; gap:10px; margin-bottom:2px; flex-wrap:wrap;}
+  .lawyer-name{font-family:'Tinos', serif; font-weight:700; font-size:19px;}
+
+  .verified{
+    display:inline-flex; align-items:center; gap:4px;
+    font-size:12px; color:var(--green);
+    background:rgba(44,95,74,0.09);
+    padding:4px 11px;
+    border-radius:12px;
+    font-weight:500;
+  }
+
+  .lawyer-specialty{
+    font-family:'Tinos', serif;
+    font-style:italic;
+    font-size:15px;
+    color:var(--slate);
+    margin-bottom:8px;
+  }
+
+  .lawyer-facts{
+    display:flex; gap:16px;
+    font-size:13.5px; color:var(--slate-light);
+    margin-bottom:14px;
+    flex-wrap:wrap;
+  }
+
+  .tag-row{display:flex; gap:8px; flex-wrap:wrap; margin-bottom:16px;}
+  .tag{
+    font-size:13px; color:var(--slate);
+    background:var(--chip-bg);
+    padding:6px 14px;
+    border-radius:6px;
+  }
+
+  .card-bottom{
+    display:flex; justify-content:space-between; align-items:center;
+    padding-top:14px;
+    border-top:1px solid var(--line);
+  }
+
+  .price-block{font-size:15px;}
+  .price-block b{font-family:'Tinos', serif; font-size:19px; font-weight:700;}
+  .price-block .unit{font-size:13px; color:var(--slate-light); margin-left:2px;}
+
+  .rating{display:flex; align-items:center; gap:8px;}
+  .rating .stars{color:var(--brass); font-size:15px; letter-spacing:1px;}
+  .rating .num{font-family:'Tinos', serif; font-weight:700; font-size:16px;}
+
+  /* ---------- Cabinet ---------- */
+
+  .cabinet-shell{display:none; min-height:calc(100vh - 77px);}
+  .cabinet-shell.show{display:grid; grid-template-columns:240px 1fr;}
+
+  .cab-sidebar{border-right:1px solid var(--line); padding:28px 20px;}
+  .cab-profile{display:flex; gap:12px; align-items:center; margin-bottom:24px; padding-bottom:18px; border-bottom:1px solid var(--line);}
+  .cab-profile .avatar{width:44px; height:44px; font-size:20px;}
+  .cab-profile-name{font-size:14.5px; font-weight:600;}
+  .cab-profile-role{font-size:12px; color:var(--slate-light);}
+
+  .cab-nav button{
+    display:flex; align-items:center; gap:10px;
+    width:100%;
+    text-align:left;
+    padding:10px 12px; margin-bottom:2px;
+    font-size:14px; color:var(--slate);
+    border-radius:var(--radius);
+  }
+  .cab-nav button:hover{background:var(--white); color:var(--ink);}
+  .cab-nav button.active{background:var(--ink); color:var(--paper);}
+  .cab-nav .badge{margin-left:auto; background:var(--brass); color:var(--white); font-size:10.5px; padding:1px 7px; border-radius:8px;}
+
+  .cab-main{padding:32px 40px;}
+  .cab-main h2{font-size:24px; margin-bottom:22px; font-family:'Tinos',serif;}
+
+  .stat-cards{display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-bottom:26px;}
+  .stat-card{border:1px solid var(--line); background:var(--white); padding:18px 20px; border-radius:var(--radius);}
+  .stat-card .num{font-family:'Tinos', serif; font-size:26px; font-weight:700;}
+  .stat-card .label{font-size:12.5px; color:var(--slate-light); margin-top:2px;}
+
+  .case-card{
+    border:1px solid var(--line); border-radius:var(--radius);
+    padding:18px 20px; margin-bottom:12px; background:var(--white);
+    display:flex; justify-content:space-between; align-items:center;
+  }
+  .case-title{font-size:14.5px; font-weight:600; margin-bottom:3px;}
+  .case-sub{font-size:12.5px; color:var(--slate-light);}
+  .status-pill{font-size:11.5px; padding:4px 11px; border-radius:10px; font-weight:500;}
+  .status-active{background:rgba(44,95,74,0.1); color:var(--green);}
+  .status-pending{background:rgba(176,141,87,0.14); color:var(--brass-dark);}
+  .status-done{background:rgba(61,71,89,0.1); color:var(--slate);}
+
+  /* ---------- Footer ---------- */
+
+  footer{border-top:1px solid var(--line); padding:36px 0; margin-top:20px;}
+  .footer-inner{display:flex; justify-content:space-between; font-size:13px; color:var(--slate-light);}
+  .footer-legal{font-size:11px; color:var(--slate-light); opacity:.8; line-height:1.5; margin-top:14px; padding-top:14px; border-top:1px solid var(--line);}
+  .tm-mark{font-size:10px; vertical-align:super; color:var(--brass-dark); margin-left:1px;}
+
+  .view{display:none;}
+  .view.show{display:block;}
+
+  /* ---------- Login modal ---------- */
+
+  .modal-overlay{
+    display:none;
+    position:fixed; inset:0;
+    background:rgba(26,31,46,0.55);
+    z-index:100;
+    align-items:center; justify-content:center;
+    padding:20px;
+  }
+  .modal-overlay.show{display:flex;}
+
+  .modal-box{
+    background:var(--white);
+    border-radius:10px;
+    width:100%; max-width:380px;
+    padding:28px;
+    box-shadow:0 20px 60px rgba(0,0,0,0.25);
+  }
+
+  .modal-head{display:flex; justify-content:space-between; align-items:center; margin-bottom:20px;}
+  .modal-head h2{font-size:20px;}
+  .modal-close{font-size:16px; color:var(--slate-light); padding:4px;}
+  .modal-close:hover{color:var(--ink);}
+
+  .field-label{display:block; font-size:12.5px; color:var(--slate-light); margin-bottom:6px; margin-top:14px;}
+  .field-label:first-of-type{margin-top:0;}
+
+  .modal-input{
+    width:100%;
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:11px 14px;
+    font-size:14.5px;
+    outline:none;
+    transition:border-color .15s;
+  }
+  .modal-input:focus{border-color:var(--brass);}
+
+  .contact-lawyer-line{font-size:13.5px; color:var(--slate); margin-bottom:16px; padding-bottom:14px; border-bottom:1px solid var(--line);}
+  .contact-textarea{resize:vertical; font-family:inherit; min-height:70px; line-height:1.4;}
+  .field-hint{font-size:11.5px; color:var(--slate-light); margin-top:6px; line-height:1.4;}
+
+  .intake-toggle{display:flex; gap:8px;}
+  .intake-toggle-btn{
+    flex:1;
+    text-align:center;
+    padding:10px 12px;
+    font-size:13px; font-weight:500;
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    color:var(--slate);
+    background:var(--white);
+    transition:border-color .15s, background .15s, color .15s;
+  }
+  .intake-toggle-btn.active{background:var(--ink); color:var(--paper); border-color:var(--ink);}
+
+  .profile-actions{display:flex; flex-direction:column; gap:10px; margin-top:4px;}
+  .contact-status{
+    display:flex; align-items:center; gap:6px;
+    font-size:13px; color:var(--green); font-weight:500;
+  }
+
+  /* ---------- Chat ---------- */
+
+  .chat-modal-box{
+    max-width:420px; width:100%;
+    height:min(640px, 82vh);
+    padding:0;
+    display:flex; flex-direction:column;
+    overflow:hidden;
+  }
+  .chat-head{
+    display:flex; align-items:center; gap:12px;
+    padding:16px 20px;
+    border-bottom:1px solid var(--line);
+    flex-shrink:0;
+  }
+  .chat-head-avatar{width:40px; height:40px; font-size:19px; flex-shrink:0;}
+  .chat-head-info{flex:1; min-width:0;}
+  .chat-head-name{font-size:14.5px; font-weight:600; color:var(--ink);}
+  .chat-head-status{font-size:12px; color:var(--slate-light); margin-top:1px;}
+
+  .chat-messages{
+    flex:1; overflow-y:auto;
+    padding:18px 20px;
+    display:flex; flex-direction:column;
+    background:#FBFAF7;
+  }
+  .chat-empty{font-size:13px; color:var(--slate-light); text-align:center; margin:auto;}
+
+  .chat-msg{
+    max-width:78%;
+    padding:10px 14px;
+    border-radius:14px;
+    font-size:13.5px; line-height:1.45;
+    margin-bottom:10px;
+    word-wrap:break-word;
+  }
+  .chat-msg.me{
+    background:var(--ink); color:var(--paper);
+    margin-left:auto;
+    border-bottom-right-radius:4px;
+  }
+  .chat-msg.lawyer{
+    background:var(--white); color:var(--ink);
+    border:1px solid var(--line);
+    margin-right:auto;
+    border-bottom-left-radius:4px;
+  }
+  .chat-msg-time{font-size:10px; opacity:.6; margin-top:4px; display:block;}
+
+  .chat-typing{
+    display:flex; gap:4px; align-items:center;
+    padding:12px 14px;
+    background:var(--white); border:1px solid var(--line);
+    border-radius:14px; border-bottom-left-radius:4px;
+    margin-bottom:10px; margin-right:auto; width:fit-content;
+  }
+  .chat-typing span{
+    width:6px; height:6px; border-radius:50%;
+    background:var(--slate-light);
+    animation:chatTypingBounce 1.1s infinite ease-in-out;
+  }
+  .chat-typing span:nth-child(2){animation-delay:.15s;}
+  .chat-typing span:nth-child(3){animation-delay:.3s;}
+  @keyframes chatTypingBounce{
+    0%, 60%, 100%{transform:translateY(0); opacity:.5;}
+    30%{transform:translateY(-4px); opacity:1;}
+  }
+
+  .chat-input-row{
+    display:flex; gap:10px;
+    padding:14px 16px;
+    border-top:1px solid var(--line);
+    flex-shrink:0;
+    background:var(--white);
+  }
+  .chat-input{
+    flex:1;
+    border:1px solid var(--line);
+    border-radius:20px;
+    padding:10px 16px;
+    font-size:14px;
+    outline:none;
+    transition:border-color .15s;
+  }
+  .chat-input:focus{border-color:var(--brass);}
+  .chat-send-btn{border-radius:20px; padding:10px 20px; flex-shrink:0;}
+
+  .case-card-clickable{cursor:pointer; transition:background .12s;}
+  .case-card-clickable:hover{background:#FBFAF7;}
+
+  .case-status-title{font-family:'Tinos', serif; font-weight:700; font-size:18px; margin-bottom:4px;}
+  .case-status-sub{font-size:13px; color:var(--slate-light); margin-bottom:18px;}
+  .case-status-pill-row{margin-bottom:18px;}
+  .case-status-note{font-size:13.5px; color:var(--slate); line-height:1.5; margin-bottom:22px;}
+
+  .request-row-actions{display:flex; align-items:center; gap:10px; flex-shrink:0;}
+  .logout-title{color:#B4463A;}
+
+  .cab-msg-preview{font-size:12.5px; color:var(--slate-light); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; max-width:220px;}
+  .cab-msg-time{font-size:11.5px; color:var(--slate-light); flex-shrink:0;}
+
+  .login-error{
+    color:#B4463A;
+    font-size:13px;
+    margin-top:10px;
+    min-height:0;
+  }
+
+  .modal-submit{width:100%; justify-content:center; margin-top:20px; padding:12px;}
+
+  .auth-switch{text-align:center; font-size:13px; color:var(--slate-light); margin-top:16px;}
+  .auth-switch a{color:var(--brass-dark); font-weight:600; cursor:pointer;}
+  .auth-switch a:hover{text-decoration:underline;}
+
+  .settings-grid{display:flex; flex-direction:column; gap:10px; max-width:320px;}
+
+  .account-badge{
+    display:inline-flex; align-items:center; gap:6px;
+    font-size:12px; color:var(--green);
+    background:rgba(44,95,74,0.09);
+    padding:4px 10px; border-radius:10px;
+    font-weight:500;
+  }
+
+  /* ---------- Lawyer profile modal ---------- */
+
+  .lawyer-modal-box{max-width:460px; max-height:85vh; overflow-y:auto;}
+
+  .profile-head{display:flex; gap:16px; align-items:center; margin-bottom:18px;}
+  .profile-head .avatar{width:64px; height:64px; font-size:28px;}
+  .profile-name{font-family:'Tinos', serif; font-weight:700; font-size:21px; margin-bottom:4px;}
+  .profile-specialty{font-family:'Tinos', serif; font-style:italic; color:var(--slate); font-size:15px;}
+
+  .profile-facts{display:flex; gap:16px; font-size:13.5px; color:var(--slate-light); margin-bottom:16px; flex-wrap:wrap;}
+
+  .profile-section-label{font-size:12px; color:var(--slate-light); letter-spacing:.04em; margin-bottom:8px; font-weight:600; margin-top:18px;}
+  .profile-facts + .profile-section-label{margin-top:0;}
+
+  .case-list{display:flex; flex-direction:column; gap:10px;}
+
+  .case-preview{
+    display:block; width:100%; text-align:left;
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:13px 15px;
+    background:#FBFAF7;
+    transition:border-color .15s, background .15s;
+  }
+  .case-preview:hover{border-color:var(--brass); background:var(--white);}
+  .cp-top{display:flex; justify-content:space-between; align-items:flex-start; gap:10px; margin-bottom:9px;}
+  .cp-title{font-size:13.5px; font-weight:600; color:var(--ink); line-height:1.35;}
+  .cp-year{font-size:12px; color:var(--slate-light); flex-shrink:0; white-space:nowrap; padding-top:1px;}
+  .cp-bottom{display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap;}
+  .cp-open{font-size:12px; color:var(--brass-dark); font-weight:600; white-space:nowrap;}
+
+  .lc-claims{display:flex; flex-direction:column; gap:4px; margin-bottom:6px;}
+  .lc-claim-row{display:flex; justify-content:space-between; gap:10px; font-size:12.5px; color:var(--slate);}
+  .lc-claim-row span:last-child{flex-shrink:0; font-variant-numeric:tabular-nums;}
+  .lc-total-row{
+    display:flex; justify-content:space-between; gap:10px;
+    font-size:13px; font-weight:600; color:var(--ink);
+    padding-top:8px; margin-bottom:4px;
+    border-top:1px dashed var(--line);
+    font-variant-numeric:tabular-nums;
+  }
+  .lc-result-row{display:flex; justify-content:space-between; align-items:center; gap:10px; margin:14px 0 10px; flex-wrap:wrap;}
+  .lc-verdict{font-size:12px; font-weight:600; padding:4px 12px; border-radius:12px; white-space:nowrap;}
+  .lc-verdict-win{background:rgba(44,95,74,0.12); color:var(--green);}
+  .lc-verdict-partial{background:rgba(176,141,87,0.16); color:var(--brass-dark);}
+  .lc-awarded{font-size:13.5px; font-weight:700; color:var(--ink); text-align:right; font-variant-numeric:tabular-nums;}
+
+  /* ---------- Case dossier modal ---------- */
+
+  .case-overlay{z-index:150;}
+  .case-modal-box{max-width:460px; max-height:85vh; overflow-y:auto;}
+  .modal-back{font-size:13px; color:var(--slate); padding:4px; font-weight:500;}
+  .modal-back:hover{color:var(--ink);}
+
+  .cd-title{font-family:'Tinos', serif; font-weight:700; font-size:19px; line-height:1.3; margin-bottom:4px;}
+  .cd-lawyer{font-size:13px; color:var(--slate-light); margin-bottom:18px;}
+
+  .cd-facts{
+    display:grid; grid-template-columns:1fr 1fr; gap:12px 16px;
+    background:var(--chip-bg); border-radius:var(--radius);
+    padding:14px 16px; margin-bottom:4px;
+  }
+  .cd-fact{display:flex; flex-direction:column; gap:2px;}
+  .cd-fact-label{font-size:11px; color:var(--slate-light); letter-spacing:.03em;}
+  .cd-fact-value{font-size:13px; color:var(--ink); font-weight:600;}
+
+  .cd-side{font-size:13.5px; color:var(--slate); font-style:italic;}
+  .cd-claims{margin-top:2px;}
+  .cd-note{font-size:13px; color:var(--slate); line-height:1.55; font-style:italic; padding-top:2px;}
+
+  .profile-bottom{
+    display:flex; justify-content:space-between; align-items:center;
+    padding:16px 0; margin:16px 0;
+    border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+  }
+
+  .profile-contact-btn{width:100%; justify-content:center; padding:13px; margin-top:4px;}
+
+  /* ---------- Toast ---------- */
+
+  .toast{
+    position:fixed; bottom:calc(24px + env(safe-area-inset-bottom, 0px)); left:50%;
+    transform:translateX(-50%) translateY(20px);
+    background:var(--ink); color:var(--paper);
+    padding:14px 24px;
+    border-radius:var(--radius);
+    font-size:14px;
+    opacity:0; pointer-events:none;
+    transition:opacity .25s, transform .25s;
+    z-index:200;
+    max-width:90vw;
+    text-align:center;
+  }
+  .toast.show{opacity:1; transform:translateX(-50%) translateY(0);}
+
+  /* ---------- Cabinet mobile tab bar (shown only on small screens) ---------- */
+  .cab-nav-mobile{
+    display:none;
+    gap:8px;
+    padding:14px 20px;
+    margin:0 -20px 20px;
+    border-bottom:1px solid var(--line);
+    overflow-x:auto;
+    -webkit-overflow-scrolling:touch;
+  }
+  .cab-nav-mobile button{
+    flex-shrink:0;
+    width:auto;
+    display:flex; align-items:center; gap:6px;
+    padding:9px 16px;
+    margin-bottom:0;
+    min-height:40px;
+    border-radius:20px;
+    background:var(--chip-bg);
+    font-size:13.5px; color:var(--slate);
+    white-space:nowrap;
+    text-align:center;
+  }
+  .cab-nav-mobile button.active{background:var(--ink); color:var(--paper);}
+  .cab-nav-mobile .badge{background:var(--brass); color:var(--white); font-size:10.5px; padding:1px 7px; border-radius:8px;}
+
+  .icon-only{display:none;}
+
+  @media (max-width: 720px){
+    .wrap{padding:0 20px;}
+    .header-inner{padding:10px 16px;}
+    .logo-icon{width:32px; height:32px; font-size:15px;}
+    .logo-text{font-size:15px;}
+    .btn{padding:9px 13px; font-size:12.5px; min-height:44px;}
+    .header-actions{gap:8px;}
+    #login-btn{max-width:110px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; display:inline-block;}
+    .hero{padding:36px 0 28px;}
+    .hero h1{font-size:30px;}
+    .hero p.lede{font-size:15px;}
+    input, select, .modal-input{font-size:16px;}
+    .search-bar{flex-direction:column; height:auto;}
+    .search-bar input{padding:16px 18px;}
+    .search-bar button{padding:16px; justify-content:center; min-height:52px;}
+    .filter-row{flex-direction:column;}
+    .filter-chip{padding:13px 18px; min-height:44px;}
+    .tag-groups{margin-top:32px;}
+    .lawyer-card{flex-direction:column; padding:20px;}
+    .card-bottom{flex-direction:column; align-items:flex-start; gap:10px;}
+    .section-head{flex-wrap:wrap; gap:10px;}
+    .stat-cards{grid-template-columns:1fr 1fr; gap:10px;}
+    .case-card{flex-wrap:wrap; gap:10px;}
+    .profile-bottom{flex-wrap:wrap; gap:12px;}
+    .cabinet-shell.show{grid-template-columns:1fr;}
+    .cab-sidebar{display:none;}
+    .cab-nav-mobile{display:flex;}
+    .cab-main{padding:20px;}
+    .modal-box{padding:22px;}
+  }
+
+  @media (max-width: 400px){
+    .logo-text{font-size:13px;}
+    .btn span.full-label{display:none;}
+    .btn span.icon-only{display:inline;}
+    .btn{padding:9px; min-width:44px; justify-content:center;}
+    #login-btn{max-width:70px;}
+    .hero h1{font-size:25px;}
+    .stat-cards{grid-template-columns:1fr;}
+    .modal-overlay{padding:12px;}
+    .modal-box{padding:18px;}
+  }
+
+</style>
+<link rel="stylesheet" href="./theme.css">
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <button class="logo-group" onclick="showView('home')">
+      <div class="logo-icon">⚖️</div>
+      <div class="logo-text">Юр<span class="accent">Маркет</span><span class="tm-mark">™</span></div>
+    </button>
+    <nav class="header-nav">
+      <button class="header-nav-btn" onclick="showView('news')">📰 Новости</button>
+      <button class="header-nav-btn" onclick="showView('video')">🎥 Видео</button>
+    </nav>
+    <div class="header-quote" id="header-quote" aria-hidden="true"></div>
+    <div class="header-actions">
+      <button class="btn btn-outline" onclick="showView('cabinet')"><span class="full-label">Кабинет</span><span class="icon-only">👤</span></button>
+      <button class="btn btn-primary" id="login-btn" onclick="openLogin()">Войти</button>
+    </div>
+  </div>
+</header>
+
+<div class="news-ticker" id="news-ticker-bar">
+  <div class="news-ticker-track" id="news-ticker-track"></div>
+</div>
+
+<!-- ============ LOGIN MODAL ============ -->
+<div id="login-overlay" class="modal-overlay" onclick="if(event.target===this) closeLogin()">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h2>Вход в ЮрМаркет</h2>
+      <button class="modal-close" onclick="closeLogin()">✕</button>
+    </div>
+    <div class="modal-body">
+      <label class="field-label">Логин</label>
+      <input id="login-user" type="text" class="modal-input" placeholder="Ваш логин" autocomplete="username">
+      <label class="field-label">Пароль</label>
+      <input id="login-pass" type="password" class="modal-input" placeholder="Пароль">
+      <div id="login-error" class="login-error"></div>
+      <button class="btn btn-primary modal-submit" onclick="submitLogin()">Войти</button>
+      <div class="auth-switch">Нет аккаунта? <a onclick="openRegister()">Зарегистрироваться</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ REGISTER MODAL ============ -->
+<div id="register-overlay" class="modal-overlay" onclick="if(event.target===this) closeRegister()">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h2>Регистрация</h2>
+      <button class="modal-close" onclick="closeRegister()">✕</button>
+    </div>
+    <div class="modal-body">
+      <label class="field-label">Вы регистрируетесь как</label>
+      <div class="intake-toggle">
+        <button type="button" id="register-toggle-person" class="intake-toggle-btn active" onclick="setRegisterType('person')">Физическое лицо</button>
+        <button type="button" id="register-toggle-lawyer" class="intake-toggle-btn" onclick="setRegisterType('lawyer')">Юрист</button>
+      </div>
+
+      <label class="field-label">ФИО</label>
+      <input id="register-name" type="text" class="modal-input" placeholder="Иван Петров">
+
+      <div class="field-hint" id="register-pass-hint">Придумайте личный пароль</div>
+
+      <div id="register-error" class="login-error"></div>
+      <button class="btn btn-primary modal-submit" onclick="submitRegister()">Создать аккаунт</button>
+      <div class="auth-switch">Уже есть аккаунт? <a onclick="closeRegister(); openLogin();">Войти</a></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============ LAWYER PROFILE MODAL ============ -->
+<div id="lawyer-overlay" class="modal-overlay" onclick="if(event.target===this) closeLawyerProfile()">
+  <div class="modal-box lawyer-modal-box">
+    <div class="modal-head">
+      <h2>Анкета юриста</h2>
+      <button class="modal-close" onclick="closeLawyerProfile()">✕</button>
+    </div>
+    <div class="modal-body" id="lawyer-modal-content"></div>
+  </div>
+</div>
+
+<!-- ============ CASE DOSSIER MODAL ============ -->
+<div id="case-overlay" class="modal-overlay case-overlay" onclick="if(event.target===this) closeCaseDetail()">
+  <div class="modal-box case-modal-box">
+    <div class="modal-head">
+      <button class="modal-back" onclick="closeCaseDetail()">← К анкете юриста</button>
+      <button class="modal-close" onclick="closeCaseDetail()">✕</button>
+    </div>
+    <div class="modal-body" id="case-modal-content"></div>
+  </div>
+</div>
+
+<!-- ============ CHAT MODAL ============ -->
+<div id="chat-overlay" class="modal-overlay" onclick="if(event.target===this) closeChat()">
+  <div class="modal-box chat-modal-box">
+    <div class="chat-head">
+      <div class="avatar chat-head-avatar" id="chat-avatar"></div>
+      <div class="chat-head-info">
+        <div class="chat-head-name" id="chat-lawyer-name"></div>
+        <div class="chat-head-status" id="chat-lawyer-status"></div>
+      </div>
+      <button class="modal-close" onclick="closeChat()">✕</button>
+    </div>
+    <div class="chat-messages" id="chat-messages"></div>
+    <div class="chat-input-row">
+      <input id="chat-input" type="text" class="chat-input" placeholder="Напишите сообщение...">
+      <button class="btn btn-primary chat-send-btn" onclick="sendChatMessage()">Отправить</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ CASE INTAKE MODAL ============ -->
+<div id="intake-overlay" class="modal-overlay" onclick="if(event.target===this) closeCaseIntakeForm()">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h2>Доверить дело юристу</h2>
+      <button class="modal-close" onclick="closeCaseIntakeForm()">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="contact-lawyer-line">Юрист: <b id="intake-lawyer-name"></b></div>
+
+      <label class="field-label">Вы обращаетесь как</label>
+      <div class="intake-toggle">
+        <button type="button" id="intake-toggle-person" class="intake-toggle-btn active" onclick="setIntakePersonType('person')">Физическое лицо</button>
+        <button type="button" id="intake-toggle-company" class="intake-toggle-btn" onclick="setIntakePersonType('company')">Юридическое лицо</button>
+      </div>
+
+      <label class="field-label" id="intake-name-label">ФИО</label>
+      <input id="intake-name" type="text" class="modal-input" placeholder="Иван Петров">
+
+      <label class="field-label">Тип дела</label>
+      <select id="intake-case-type" class="modal-input"></select>
+
+      <div id="intake-address-block">
+        <label class="field-label">Адрес ответчика (на кого подаёте в суд)</label>
+        <input id="intake-defendant-address" type="text" class="modal-input" placeholder="Город, улица, дом, квартира">
+        <div class="field-hint">Нужен, чтобы юрист определил подсудность — мировой или районный суд по месту жительства (регистрации) ответчика.</div>
+      </div>
+
+      <label class="field-label">Кратко опишите ситуацию</label>
+      <textarea id="intake-description" class="modal-input contact-textarea" rows="3" placeholder="Что произошло, что хотите взыскать или оспорить..."></textarea>
+
+      <div id="intake-error" class="login-error"></div>
+      <button class="btn btn-primary modal-submit" onclick="submitCaseIntakeForm()">Отправить обращение</button>
+    </div>
+  </div>
+</div>
+
+<!-- ============ CASE STATUS MODAL ============ -->
+<div id="case-status-overlay" class="modal-overlay" onclick="if(event.target===this) closeCaseStatus()">
+  <div class="modal-box">
+    <div class="modal-head">
+      <h2>Статус дела</h2>
+      <button class="modal-close" onclick="closeCaseStatus()">✕</button>
+    </div>
+    <div class="modal-body" id="case-status-content"></div>
+  </div>
+</div>
+
+<div id="toast" class="toast"></div>
+
+<!-- ============ HOME VIEW ============ -->
+<div id="view-home" class="view show">
+
+  <div class="wrap hero-row">
+    <div class="hero-reel-col" id="video-section">
+      <div class="section-head" style="margin-bottom:10px;">
+        <h2 style="font-size:15px;">Прямые эфиры</h2>
+      </div>
+      <div class="reel-widget">
+        <div class="reel-card" onclick="openArticlePage('video', window.reelIndex)">
+          <div class="reel-thumb" id="reel-thumb">🎥</div>
+          <div class="reel-overlay">
+            <div class="reel-tag" id="reel-tag"></div>
+            <div class="reel-title" id="reel-title"></div>
+            <div class="reel-meta">
+              <span id="reel-likes"></span>
+              <span class="reel-rec" id="reel-rec"></span>
+            </div>
+          </div>
+          <button class="reel-nav reel-prev" onclick="event.stopPropagation(); reelStep(-1)">‹</button>
+          <button class="reel-nav reel-next" onclick="event.stopPropagation(); reelStep(1)">›</button>
+        </div>
+        <div class="reel-dots" id="reel-dots"></div>
+      </div>
+      <a class="back-link" style="margin:10px 0 0;" onclick="showView('video')">Смотреть все →</a>
+    </div>
+
+    <section class="hero">
+      <div class="hero-eyebrow"><span class="rule"></span> ЮРМАРКЕТ · ПРАВОВАЯ ПОМОЩЬ <span class="rule"></span></div>
+      <h1>Найдите юриста под<span class="cursive">вашу ситуацию</span></h1>
+      <p class="lede">Опишите проблему своими словами — подберём подходящего специалиста с реальными отзывами</p>
+
+    <div class="search-wrap">
+      <div class="search-bar">
+        <input id="f-query" type="text" placeholder="Меня обвиняют, контрагент не платит...">
+        <button onclick="runSearch()">Найти юриста →</button>
+      </div>
+      <div class="filter-row">
+        <label class="filter-chip">
+          <span class="chip-icon">☰</span>
+          <span class="chip-text" id="chip-practice-text">Специализация</span>
+          <select id="f-practice" onchange="updateChipText('f-practice','chip-practice-text','Специализация')">
+            <option value="">Специализация</option>
+            <option>Семейное право</option>
+            <option>Трудовые споры</option>
+            <option>Уголовное право</option>
+            <option>Банкротство</option>
+            <option>Недвижимость</option>
+            <option>Корпоративное право</option>
+          </select>
+        </label>
+        <label class="filter-chip">
+          <span class="chip-icon">📍</span>
+          <span class="chip-text" id="chip-city-text">Город</span>
+          <select id="f-city" onchange="updateChipText('f-city','chip-city-text','Город')">
+            <option value="">Город</option>
+            <option>Москва</option><option>Санкт-Петербург</option><option>Новосибирск</option>
+            <option>Екатеринбург</option><option>Казань</option><option>Нижний Новгород</option>
+            <option>Челябинск</option><option>Самара</option><option>Омск</option>
+            <option>Ростов-на-Дону</option><option>Уфа</option><option>Красноярск</option>
+            <option>Пермь</option><option>Воронеж</option><option>Краснодар</option>
+          </select>
+        </label>
+        <label class="filter-chip">
+          <span class="chip-icon">👤</span>
+          <span class="chip-text" id="chip-audience-text">Физлица / Бизнес</span>
+          <select id="f-audience" onchange="updateChipText('f-audience','chip-audience-text','Физлица / Бизнес')">
+            <option value="">Физлица / Бизнес</option>
+            <option>Физлица</option>
+            <option>Бизнес</option>
+          </select>
+        </label>
+        <label class="filter-chip">
+          <span class="chip-icon">💰</span>
+          <span class="chip-text" id="chip-price-text">Цена</span>
+          <select id="f-price" onchange="updateChipText('f-price','chip-price-text','Цена')">
+            <option value="">Цена</option>
+            <option>До 3 000 ₽/час</option>
+            <option>3 000–5 000 ₽/час</option>
+            <option>От 5 000 ₽/час</option>
+          </select>
+        </label>
+      </div>
+    </div>
+
+    <div class="tag-groups">
+      <div class="tag-group-label">ФИЗИЧЕСКИЕ ЛИЦА</div>
+      <div class="tag-flow" id="tags-personal"></div>
+      <div class="tag-group-label">БИЗНЕС И КОМПАНИИ</div>
+      <div class="tag-flow" id="tags-business"></div>
+    </div>
+    </section>
+    <div class="hero-spacer" aria-hidden="true"></div>
+  </div>
+
+  <section class="section wrap" id="results-section">
+    <div class="section-head">
+      <h2>Юристы</h2>
+      <select class="sort-select" id="sort-select" onchange="renderLawyers()">
+        <option value="rating">По рейтингу</option>
+        <option value="reviews">По числу отзывов</option>
+        <option value="price">По стоимости</option>
+      </select>
+    </div>
+    <div class="results-count" id="results-count" style="margin-bottom:16px;"><b>36</b> юристов найдено</div>
+    <div class="lawyer-list" id="lawyer-list"></div>
+  </section>
+
+</div>
+
+<!-- ============ CABINET VIEW ============ -->
+<div id="view-cabinet" class="view">
+  <div class="cabinet-shell show">
+    <aside class="cab-sidebar">
+      <div class="cab-profile">
+        <div class="avatar" id="cab-avatar">👤</div>
+        <div>
+          <div class="cab-profile-name" id="cab-name">Гость</div>
+          <div class="cab-profile-role" id="cab-role">Не авторизован</div>
+        </div>
+      </div>
+      <nav class="cab-nav">
+        <button class="active" onclick="showCabTab('overview', event)">Обзор</button>
+        <button class="cab-client-link" onclick="showCabTab('cases', event)">Мои дела <span class="badge cases-badge">0</span></button>
+        <button onclick="showCabTab('messages', event)">Сообщения</button>
+        <button class="cab-lawyer-link" onclick="showCabTab('requests', event)" style="display:none;">Заявки клиентов <span class="badge requests-badge">0</span></button>
+        <button class="cab-lawyer-link" onclick="showCabTab('lawprofile', event)" style="display:none;">Мой профиль</button>
+        <button id="cab-admin-link" class="cab-admin-link" onclick="showCabTab('admin', event)" style="display:none;">Управление</button>
+        <button onclick="showCabTab('settings', event)">Настройки</button>
+      </nav>
+    </aside>
+    <main class="cab-main">
+      <nav class="cab-nav cab-nav-mobile">
+        <button class="active" onclick="showCabTab('overview', event)">Обзор</button>
+        <button class="cab-client-link" onclick="showCabTab('cases', event)">Мои дела <span class="badge cases-badge">0</span></button>
+        <button onclick="showCabTab('messages', event)">Сообщения</button>
+        <button class="cab-lawyer-link" onclick="showCabTab('requests', event)" style="display:none;">Заявки клиентов <span class="badge requests-badge">0</span></button>
+        <button class="cab-lawyer-link" onclick="showCabTab('lawprofile', event)" style="display:none;">Мой профиль</button>
+        <button id="cab-admin-link-mobile" class="cab-admin-link" onclick="showCabTab('admin', event)" style="display:none;">Управление</button>
+        <button onclick="showCabTab('settings', event)">Настройки</button>
+      </nav>
+      <div id="cab-overview" class="cab-tab">
+        <h2 id="cab-welcome">Добро пожаловать</h2>
+        <div class="stat-cards">
+          <div class="stat-card"><div class="num" id="stat-1">0</div><div class="label" id="stat-1-label">активных дела</div></div>
+          <div class="stat-card"><div class="num" id="stat-2">0</div><div class="label" id="stat-2-label">сообщений</div></div>
+          <div class="stat-card"><div class="num" id="stat-3">3</div><div class="label" id="stat-3-label">юриста в избранном</div></div>
+        </div>
+        <div id="cab-overview-cases"></div>
+      </div>
+
+      <div id="cab-cases" class="cab-tab" style="display:none;">
+        <h2>Мои дела</h2>
+        <div id="cab-cases-list"></div>
+      </div>
+
+      <div id="cab-messages" class="cab-tab" style="display:none;">
+        <h2>Сообщения</h2>
+        <div id="cab-messages-list"></div>
+      </div>
+
+      <div id="cab-requests" class="cab-tab" style="display:none;">
+        <h2>Заявки клиентов</h2>
+        <div id="cab-requests-list"></div>
+      </div>
+
+      <div id="cab-lawprofile" class="cab-tab" style="display:none;">
+        <h2>Мой профиль</h2>
+        <div id="cab-lawprofile-content"></div>
+      </div>
+
+      <div id="cab-settings" class="cab-tab" style="display:none;">
+        <h2>Настройки</h2>
+        <div class="case-card case-card-clickable" onclick="showToast('Редактирование профиля — демо-версия, без сохранения')"><div><div class="case-title" id="settings-name">Имя и контакты</div><div class="case-sub" id="settings-sub">Не авторизован</div></div></div>
+        <div class="case-card case-card-clickable" onclick="showToast('Настройки уведомлений обновлены')"><div><div class="case-title">Уведомления</div><div class="case-sub">Email и push включены</div></div></div>
+        <div class="case-card">
+          <div style="width:100%;">
+            <div class="case-title" style="margin-bottom:12px;">Регион и язык</div>
+            <div class="settings-grid">
+              <select id="settings-country" class="modal-input" onchange="onSettingsCountryChange(this.value)">
+                <option>Россия</option>
+                <option>Беларусь</option>
+                <option>Казахстан</option>
+              </select>
+              <select id="settings-region" class="modal-input" onchange="updateUserSetting('region', this.value)"></select>
+              <select id="settings-language" class="modal-input" onchange="updateUserSetting('language', this.value)">
+                <option>Русский</option>
+                <option>English</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="case-card case-card-clickable" onclick="logout()"><div><div class="case-title logout-title">Выйти из аккаунта</div><div class="case-sub">Завершить текущий сеанс</div></div></div>
+      </div>
+
+      <div id="cab-admin" class="cab-tab" style="display:none;">
+        <h2>Управление платформой</h2>
+        <div class="stat-cards">
+          <div class="stat-card"><div class="num">2 417</div><div class="label">юристов на платформе</div></div>
+          <div class="stat-card"><div class="num">18 900</div><div class="label">закрытых дел</div></div>
+          <div class="stat-card"><div class="num">6</div><div class="label">заявок на модерацию</div></div>
+        </div>
+        <div class="case-card case-card-clickable" onclick="showToast('Заявка Артёма Зайцева одобрена')">
+          <div><div class="case-title">Заявка юриста — Артём Зайцев</div><div class="case-sub">Корпоративное право · ожидает проверки документов</div></div>
+          <span class="status-pill status-pending">На модерации</span>
+        </div>
+        <div class="case-card case-card-clickable" onclick="showToast('Жалоба по делу #4471 рассмотрена')">
+          <div><div class="case-title">Жалоба на отзыв — дело #4471</div><div class="case-sub">Клиент оспаривает публикацию отзыва</div></div>
+          <span class="status-pill status-pending">Требует решения</span>
+        </div>
+        <div class="case-card">
+          <div><div class="case-title">Владелец платформы</div><div class="case-sub">Кочуров Владислав · полный доступ</div></div>
+          <span class="account-badge">✓ Админ</span>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+
+<!-- ============ NEWS VIEW ============ -->
+<div id="view-news" class="view">
+  <section class="section wrap">
+    <a class="back-link" onclick="showView('home')">← На главную</a>
+    <div class="section-head"><h2>Новости в мире юриспруденции</h2></div>
+    <div class="article-list" id="news-page-list"></div>
+  </section>
+</div>
+
+<!-- ============ VIDEO VIEW ============ -->
+<div id="view-video" class="view">
+  <section class="section wrap">
+    <a class="back-link" onclick="showView('home')">← На главную</a>
+    <div class="section-head"><h2>Прямые эфиры и подкасты</h2></div>
+    <div class="video-grid" id="video-page-grid"></div>
+  </section>
+</div>
+
+<!-- ============ ARTICLE VIEW ============ -->
+<div id="view-article" class="view">
+  <section class="section wrap">
+    <a class="back-link" onclick="goBackFromArticle()">← Назад</a>
+    <div id="article-page-content"></div>
+  </section>
+</div>
+
+<footer>
+  <div class="wrap footer-inner">
+    <span>© 2026 ЮрМаркет. Кочуров В. А. Все права защищены.</span>
+    <span>Юридические услуги по всей России</span>
+  </div>
+  <div class="wrap footer-legal">
+    «ЮрМаркет»™ — название, логотип и фирменный стиль являются объектами интеллектуальной собственности правообладателя (Кочуров В. А.). Копирование, воспроизведение и использование без письменного разрешения запрещены.
+  </div>
+</footer>
+
+<script>
+
+const tagsPersonal = ["Развод","Уголовное дело","Трудовой спор","Банкротство","ДТП","Недвижимость","Наследство","Апелляция","Мед. право","Миграция"];
+const tagsBusiness = ["Арбитраж","Корпоративное","Налоги","Банкротство юрлиц","Интел. собственность","Земельное право","IT-право"];
+
+const lawyers = [
+  // Москва
+  {name:"Алексей Мороз", specialty:"Семейное право", city:"Москва", years:12, reviews:87, online:true, tags:["Развод","Раздел имущества","Алименты"], price:"3 500", rating:4.9, avatar:"🧑‍💼", cases:[
+    {title:"Раздел квартиры и автомобиля при разводе", side:"Интересы истицы", court:"Тверской районный суд г. Москвы", caseNumber:"№ 2-1847/2024", duration:"7 месяцев", claimItems:[{label:"Квартира",sum:"4 800 000 ₽"},{label:"Автомобиль",sum:"1 200 000 ₽"}], claimedTotal:"6 000 000 ₽", awardedTotal:"3 300 000 ₽ (55% доли)", verdictBadge:"55/45 в пользу клиентки", verdictTone:"win", note:"Суд учёл, что ремонт квартиры оплачен из личных добрачных средств клиентки.", year:2024},
+    {title:"Компенсация морального вреда за жестокое обращение в браке", side:"Интересы истицы (потерпевшая супруга)", court:"Тверской районный суд г. Москвы", caseNumber:"№ 2-2203/2023", duration:"5 месяцев", claimItems:[{label:"Моральный вред",sum:"500 000 ₽"}], claimedTotal:"500 000 ₽", awardedTotal:"150 000 ₽", verdictBadge:"Удовлетворено на 30%", verdictTone:"partial", note:"Суд счёл заявленную сумму завышенной, но подтвердил факт причинения вреда.", year:2023}
+  ]},
+  {name:"Роман Иванов", specialty:"Уголовное право", city:"Москва", years:16, reviews:134, online:true, tags:["Защита по уголовным делам","Мошенничество","Отмывание денег"], price:"6 000", rating:4.9, avatar:"🧑‍💼", cases:[
+    {title:"Защита по делу о мошенничестве, гражданский иск потерпевшего", side:"Защита обвиняемого", court:"Тверской районный суд г. Москвы", caseNumber:"№ 1-412/2024", duration:"11 месяцев", claimItems:[{label:"Гражданский иск потерпевшего",sum:"4 000 000 ₽"}], claimedTotal:"4 000 000 ₽", awardedTotal:"900 000 ₽", verdictBadge:"Снижено на 78%", verdictTone:"win", note:"Обвинение переквалифицировано на менее тяжкую статью, часть ущерба не подтверждена экспертизой.", year:2024},
+    {title:"Защита по делу о причинении тяжкого вреда здоровью", side:"Защита обвиняемого", court:"Тверской районный суд г. Москвы", caseNumber:"№ 1-298/2023", duration:"9 месяцев", claimItems:[{label:"Моральный вред",sum:"1 800 000 ₽"}], claimedTotal:"1 800 000 ₽", awardedTotal:"400 000 ₽", verdictBadge:"Снижено на 78%", verdictTone:"win", note:"Доказана обоюдная вина в конфликте, что повлияло на размер компенсации.", year:2023}
+  ]},
+  {name:"Виктория Соловьёва", specialty:"Недвижимость", city:"Москва", years:10, reviews:95, online:true, tags:["Сделки купли-продажи","ДДУ","Перепланировка"], price:"4 300", rating:4.8, avatar:"👩‍💼", cases:[
+    {title:"Взыскание неустойки с застройщика за просрочку сдачи квартиры", side:"Интересы дольщика", court:"Тверской районный суд г. Москвы", caseNumber:"№ 2-3390/2024", duration:"4 месяца", claimItems:[{label:"Неустойка за просрочку",sum:"650 000 ₽"},{label:"Моральный вред",sum:"200 000 ₽"}], claimedTotal:"850 000 ₽", awardedTotal:"620 000 ₽", verdictBadge:"Взыскано 73%", verdictTone:"partial", note:"Суд снизил неустойку по ходатайству застройщика о явной несоразмерности.", year:2024},
+    {title:"Расторжение договора долевого участия и возврат средств", side:"Интересы дольщика", court:"Тверской районный суд г. Москвы", caseNumber:"№ 2-1105/2023", duration:"6 месяцев", claimItems:[{label:"Уплаченные по ДДУ средства",sum:"6 500 000 ₽"},{label:"Неустойка",sum:"800 000 ₽"}], claimedTotal:"7 300 000 ₽", awardedTotal:"7 300 000 ₽", verdictBadge:"Взыскано полностью", verdictTone:"win", note:"Застройщик существенно нарушил сроки, договор расторгнут в судебном порядке.", year:2023}
+  ]},
+  {name:"Артём Беляков", specialty:"Корпоративное право", city:"Москва", years:15, reviews:120, online:true, tags:["Регистрация бизнеса","Due Diligence","Споры партнёров"], price:"7 500", rating:4.9, avatar:"🧑‍💼", cases:[
+    {title:"Взыскание задолженности по договору поставки", side:"Интересы поставщика", court:"Арбитражный суд города Москвы", caseNumber:"№ А40-98214/2024", duration:"3 месяца", claimItems:[{label:"Задолженность по договору",sum:"3 400 000 ₽"}], claimedTotal:"3 400 000 ₽", awardedTotal:"3 400 000 ₽", verdictBadge:"Взыскано полностью", verdictTone:"win", note:"Взыскание произведено через арбитражный суд в упрощённом порядке.", year:2024},
+    {title:"Защита от недружественного поглощения", side:"Интересы компании", court:"Арбитражный суд города Москвы", caseNumber:"№ А40-55672/2023", duration:"1 год 2 месяца", claimItems:[{label:"Оспариваемый актив",sum:"20 000 000 ₽"}], claimedTotal:"20 000 000 ₽", awardedTotal:"Актив сохранён за компанией", verdictBadge:"Захват отражён", verdictTone:"win", note:"Реестр участников восстановлен, попытка смены руководства признана незаконной.", year:2023}
+  ]},
+
+  // Санкт-Петербург
+  {name:"Марина Соколова", specialty:"Трудовые споры", city:"Санкт-Петербург", years:8, reviews:62, online:true, tags:["Незаконное увольнение","Невыплата зарплаты","Восстановление"], price:"2 800", rating:4.8, avatar:"👩‍💼", cases:[
+    {title:"Восстановление на работе после незаконного увольнения", side:"Интересы истца (работница)", court:"Смольнинский районный суд г. Санкт-Петербурга", caseNumber:"№ 2-887/2024", duration:"3 месяца", claimItems:[{label:"Средний заработок за 4 мес. прогула",sum:"430 000 ₽"},{label:"Моральный вред",sum:"50 000 ₽"}], claimedTotal:"480 000 ₽", awardedTotal:"480 000 ₽", verdictBadge:"Восстановлена + взыскано полностью", verdictTone:"win", note:"Увольнение признано незаконным, работница восстановлена в должности.", year:2024},
+    {title:"Взыскание компенсации за неиспользованный отпуск при сокращении", side:"Интересы истца", court:"Смольнинский районный суд г. Санкт-Петербурга", caseNumber:"№ 2-1450/2025", duration:"6 недель", claimItems:[{label:"Компенсация за отпуск",sum:"145 000 ₽"}], claimedTotal:"145 000 ₽", awardedTotal:"145 000 ₽", verdictBadge:"Взыскано полностью", verdictTone:"win", note:"Работодатель произвёл расчёт с нарушением установленных сроков.", year:2025}
+  ]},
+  {name:"Игорь Лебедев", specialty:"Банкротство", city:"Санкт-Петербург", years:13, reviews:77, online:false, tags:["Личное банкротство","Реструктуризация долгов","Списание кредитов"], price:"5 400", rating:4.7, avatar:"🧑‍💼", cases:[
+    {title:"Личное банкротство при крупном долге перед банками", side:"Интересы должника", court:"Арбитражный суд города Санкт-Петербурга и Ленинградской области", caseNumber:"№ А56-71029/2024", duration:"10 месяцев", claimItems:[{label:"Совокупный долг перед банками",sum:"4 200 000 ₽"}], claimedTotal:"4 200 000 ₽", awardedTotal:"0 ₽ (долг списан)", verdictBadge:"Списано 100%", verdictTone:"win", note:"Процедура реализации имущества завершена, кредиторы получили частичное удовлетворение из конкурсной массы.", year:2024},
+    {title:"Оспаривание сделки по выводу активов должника", side:"Интересы конкурсного кредитора", court:"Арбитражный суд города Санкт-Петербурга и Ленинградской области", caseNumber:"№ А56-40218/2023", duration:"8 месяцев", claimItems:[{label:"Возврат в конкурсную массу",sum:"1 500 000 ₽"}], claimedTotal:"1 500 000 ₽", awardedTotal:"1 500 000 ₽", verdictBadge:"Актив возвращён полностью", verdictTone:"win", note:"Сделка признана недействительной как совершённая с целью вывода активов.", year:2023}
+  ]},
+  {name:"Ольга Максимова", specialty:"Недвижимость", city:"Санкт-Петербург", years:7, reviews:54, online:true, tags:["Сделки купли-продажи","Долевое строительство","Оспаривание сделок"], price:"3 900", rating:4.6, avatar:"👩‍💼", cases:[
+    {title:"Оспаривание сделки купли-продажи квартиры, совершённой под давлением", side:"Интересы продавца", court:"Смольнинский районный суд г. Санкт-Петербурга", caseNumber:"№ 2-2015/2024", duration:"9 месяцев", claimItems:[{label:"Стоимость квартиры",sum:"7 200 000 ₽"}], claimedTotal:"7 200 000 ₽", awardedTotal:"Квартира возвращена клиенту", verdictBadge:"Сделка отменена", verdictTone:"win", note:"Доказано совершение сделки под угрозами со стороны покупателя.", year:2024},
+    {title:"Взыскание компенсации за залив квартиры соседями сверху", side:"Интересы пострадавшего", court:"Смольнинский районный суд г. Санкт-Петербурга", caseNumber:"№ 2-560/2025", duration:"2 месяца", claimItems:[{label:"Ущерб от залива",sum:"540 000 ₽"}], claimedTotal:"540 000 ₽", awardedTotal:"480 000 ₽", verdictBadge:"Взыскано 89%", verdictTone:"win", note:"Часть суммы снижена по результатам независимой оценочной экспертизы.", year:2025}
+  ]},
+
+  // Новосибирск
+  {name:"Дмитрий Волков", specialty:"Банкротство", city:"Новосибирск", years:11, reviews:58, online:true, tags:["Личное банкротство","Реструктуризация"], price:"5 200", rating:4.6, avatar:"🧑‍💼", cases:[
+    {title:"Реструктуризация долга перед банками", side:"Интересы должника", court:"Арбитражный суд Новосибирской области", caseNumber:"№ А45-33107/2024", duration:"7 месяцев", claimItems:[{label:"Общий долг перед банками",sum:"2 800 000 ₽"}], claimedTotal:"2 800 000 ₽", awardedTotal:"План на 3 года без начисления процентов", verdictBadge:"Реструктурировано", verdictTone:"win", note:"Утверждён график погашения без штрафов и пеней.", year:2024},
+    {title:"Освобождение от долгов по кредитам", side:"Интересы должника", court:"Арбитражный суд Новосибирской области", caseNumber:"№ А45-19845/2025", duration:"9 месяцев", claimItems:[{label:"Задолженность по кредитам",sum:"6 700 000 ₽"}], claimedTotal:"6 700 000 ₽", awardedTotal:"0 ₽ (долг списан)", verdictBadge:"Списано 100%", verdictTone:"win", note:"Единственное жильё сохранено, исключено из конкурсной массы.", year:2025}
+  ]},
+  {name:"Екатерина Реброва", specialty:"Семейное право", city:"Новосибирск", years:6, reviews:41, online:true, tags:["Развод","Алименты","Опека над детьми"], price:"3 200", rating:4.7, avatar:"👩‍💼", cases:[
+    {title:"Взыскание алиментов на двоих детей", side:"Интересы истицы (мать)", court:"Центральный районный суд г. Новосибирска", caseNumber:"№ 2-704/2024", duration:"2 месяца", claimItems:[{label:"Алименты на 2 детей",sum:"50 000 ₽/мес"}], claimedTotal:"50 000 ₽/мес", awardedTotal:"45 000 ₽/мес", verdictBadge:"90% от заявленного", verdictTone:"win", note:"Ответчик пытался занизить официальный доход — представлены доказательства неучтённого заработка.", year:2024},
+    {title:"Определение места жительства ребёнка и взыскание алиментов", side:"Интересы истицы (мать)", court:"Центральный районный суд г. Новосибирска", caseNumber:"№ 2-1220/2025", duration:"3 месяца", claimItems:[{label:"Алименты",sum:"40 000 ₽/мес"}], claimedTotal:"40 000 ₽/мес", awardedTotal:"40 000 ₽/мес", verdictBadge:"Удовлетворено полностью", verdictTone:"win", note:"Ребёнок оставлен с матерью, отцу назначен график общения.", year:2025}
+  ]},
+  {name:"Павел Гуляев", specialty:"Трудовые споры", city:"Новосибирск", years:9, reviews:58, online:true, tags:["Незаконное увольнение","Задержка зарплаты","Сокращение штата"], price:"2 600", rating:4.6, avatar:"🧑‍💼", cases:[
+    {title:"Взыскание невыплаченной зарплаты за 3 месяца", side:"Интересы истца (работник)", court:"Центральный районный суд г. Новосибирска", caseNumber:"№ 2-311/2023", duration:"3 недели", claimItems:[{label:"Задолженность по зарплате",sum:"270 000 ₽"}], claimedTotal:"270 000 ₽", awardedTotal:"270 000 ₽", verdictBadge:"Взыскано полностью", verdictTone:"win", note:"Взыскание оформлено судебным приказом за 10 дней.", year:2023},
+    {title:"Взыскание премии и невыплаченных бонусов", side:"Интересы истца (работник)", court:"Центральный районный суд г. Новосибирска", caseNumber:"№ 2-1680/2024", duration:"4 месяца", claimItems:[{label:"Годовая премия и бонусы",sum:"620 000 ₽"}], claimedTotal:"620 000 ₽", awardedTotal:"480 000 ₽", verdictBadge:"Взыскано 77%", verdictTone:"partial", note:"Часть бонуса признана необязательной выплатой по внутреннему положению компании.", year:2024}
+  ]},
+
+  // Екатеринбург
+  {name:"Наталья Ким", specialty:"Недвижимость", city:"Екатеринбург", years:9, reviews:71, online:false, tags:["Сделки","ДДУ","Перепланировка"], price:"4 000", rating:4.7, avatar:"👩‍💼", cases:[
+    {title:"Взыскание убытков за скрытые дефекты после покупки дома", side:"Интересы покупателя", court:"Ленинский районный суд г. Екатеринбурга", caseNumber:"№ 2-2244/2023", duration:"6 месяцев", claimItems:[{label:"Устранение скрытых дефектов",sum:"1 400 000 ₽"}], claimedTotal:"1 400 000 ₽", awardedTotal:"950 000 ₽", verdictBadge:"Взыскано 68%", verdictTone:"partial", note:"Часть дефектов признана естественным износом, не подлежащим компенсации.", year:2023},
+    {title:"Признание права собственности на самовольную постройку", side:"Интересы владельца", court:"Ленинский районный суд г. Екатеринбурга", caseNumber:"№ 2-905/2024", duration:"5 месяцев", claimItems:[{label:"Стоимость объекта",sum:"3 100 000 ₽"}], claimedTotal:"3 100 000 ₽", awardedTotal:"Право собственности признано", verdictBadge:"Узаконено полностью", verdictTone:"win", note:"Постройка соответствует градостроительным нормам, снос не требуется.", year:2024}
+  ]},
+  {name:"Максим Захаров", specialty:"Уголовное право", city:"Екатеринбург", years:18, reviews:156, online:true, tags:["Защита по уголовным делам","Экономические преступления","Хищения"], price:"6 200", rating:4.9, avatar:"🧑‍💼", cases:[
+    {title:"Защита по обвинению в хищении, иск потерпевшей стороны", side:"Защита обвиняемого", court:"Ленинский районный суд г. Екатеринбурга", caseNumber:"№ 1-176/2024", duration:"8 месяцев", claimItems:[{label:"Иск потерпевшей стороны",sum:"2 500 000 ₽"}], claimedTotal:"2 500 000 ₽", awardedTotal:"0 ₽", verdictBadge:"Дело прекращено, иск снят", verdictTone:"win", note:"Стороны примирились, ущерб возмещён добровольно до суда.", year:2024},
+    {title:"Защита по экономическому преступлению", side:"Защита обвиняемого", court:"Ленинский районный суд г. Екатеринбурга", caseNumber:"№ 1-503/2025", duration:"1 год 3 месяца", claimItems:[{label:"Заявленный ущерб следствия",sum:"30 000 000 ₽"}], claimedTotal:"30 000 000 ₽", awardedTotal:"6 000 000 ₽", verdictBadge:"Снижено на 80%", verdictTone:"win", note:"Независимая финансовая экспертиза опровергла расчёт следствия.", year:2025}
+  ]},
+  {name:"Юлия Панова", specialty:"Корпоративное право", city:"Екатеринбург", years:11, reviews:89, online:false, tags:["Регистрация бизнеса","Коммерческие договоры","Слияния и поглощения"], price:"6 900", rating:4.8, avatar:"👩‍💼", cases:[
+    {title:"Спор между партнёрами о распределении прибыли ООО", side:"Интересы миноритарного участника", court:"Арбитражный суд Свердловской области", caseNumber:"№ А60-28871/2024", duration:"6 месяцев", claimItems:[{label:"Заявленная доля прибыли",sum:"6 200 000 ₽"}], claimedTotal:"6 200 000 ₽", awardedTotal:"2 900 000 ₽", verdictBadge:"Взыскано 47%", verdictTone:"partial", note:"Часть требований признана необоснованной ввиду отсутствия решения общего собрания.", year:2024},
+    {title:"Оспаривание крупной сделки без одобрения совета директоров", side:"Интересы компании", court:"Арбитражный суд Свердловской области", caseNumber:"№ А60-14432/2025", duration:"8 месяцев", claimItems:[{label:"Сумма оспариваемой сделки",sum:"15 000 000 ₽"}], claimedTotal:"15 000 000 ₽", awardedTotal:"Сделка признана недействительной", verdictBadge:"Сделка отменена", verdictTone:"win", note:"Сделка совершена с нарушением устава, требовавшим одобрения совета директоров.", year:2025}
+  ]},
+
+  // Казань
+  {name:"Мария Орлова", specialty:"Корпоративное право", city:"Казань", years:14, reviews:112, online:true, tags:["Регистрация бизнеса","Договоры","Споры партнёров"], price:"7 000", rating:4.9, avatar:"👩‍💼", cases:[
+    {title:"Исключение недобросовестного участника из ООО", side:"Интересы остальных участников", court:"Арбитражный суд Республики Татарстан", caseNumber:"№ А65-19003/2023", duration:"7 месяцев", claimItems:[{label:"Стоимость выкупаемой доли",sum:"4 000 000 ₽"}], claimedTotal:"4 000 000 ₽", awardedTotal:"Участник исключён, доля выкуплена", verdictBadge:"Требование удовлетворено", verdictTone:"win", note:"Доказано систематическое причинение вреда деятельности компании.", year:2023},
+    {title:"Взыскание убытков с директора за недобросовестные сделки", side:"Интересы компании", court:"Арбитражный суд Республики Татарстан", caseNumber:"№ А65-40217/2024", duration:"10 месяцев", claimItems:[{label:"Убытки от сделок директора",sum:"8 500 000 ₽"}], claimedTotal:"8 500 000 ₽", awardedTotal:"3 200 000 ₽", verdictBadge:"Взыскано 38%", verdictTone:"partial", note:"Часть сделок признана экономически обоснованной на момент совершения.", year:2024}
+  ]},
+  {name:"Руслан Гарипов", specialty:"Банкротство", city:"Казань", years:8, reviews:47, online:true, tags:["Личное банкротство","Работа с приставами","Реструктуризация"], price:"4 900", rating:4.6, avatar:"🧑‍💼", cases:[
+    {title:"Защита квартиры от включения в конкурсную массу", side:"Интересы должника", court:"Арбитражный суд Республики Татарстан", caseNumber:"№ А65-8842/2023", duration:"5 месяцев", claimItems:[{label:"Стоимость квартиры",sum:"5 000 000 ₽"}], claimedTotal:"5 000 000 ₽", awardedTotal:"Квартира сохранена за должником", verdictBadge:"Актив защищён", verdictTone:"win", note:"Квартира признана единственным пригодным для проживания жильём.", year:2023},
+    {title:"Оспаривание требований кредитора", side:"Интересы должника", court:"Арбитражный суд Республики Татарстан", caseNumber:"№ А65-27650/2024", duration:"4 месяца", claimItems:[{label:"Требование кредитора",sum:"1 900 000 ₽"}], claimedTotal:"1 900 000 ₽", awardedTotal:"0 ₽", verdictBadge:"Требование отклонено", verdictTone:"win", note:"Кредитор не смог документально подтвердить основание долга.", year:2024}
+  ]},
+  {name:"Гульнара Хафизова", specialty:"Семейное право", city:"Казань", years:12, reviews:93, online:true, tags:["Развод","Раздел имущества","Брачный договор"], price:"3 400", rating:4.8, avatar:"👩‍💼", cases:[
+    {title:"Раздел бизнеса супругов при разводе", side:"Интересы истицы (совладелица бизнеса)", court:"Вахитовский районный суд г. Казани", caseNumber:"№ 2-1590/2023", duration:"9 месяцев", claimItems:[{label:"Доля в совместном бизнесе",sum:"12 000 000 ₽"}], claimedTotal:"12 000 000 ₽", awardedTotal:"4 500 000 ₽ компенсацией", verdictBadge:"Компенсация 4,5 млн ₽", verdictTone:"win", note:"Бизнес оставлен супругу-учредителю, клиентка получила денежную компенсацию доли.", year:2023},
+    {title:"Оспаривание брачного договора", side:"Интересы истицы", court:"Вахитовский районный суд г. Казани", caseNumber:"№ 2-777/2024", duration:"4 месяца", claimItems:[{label:"Оспариваемые пункты договора",sum:"2 пункта"}], claimedTotal:"Признание договора недействительным", awardedTotal:"Договор изменён частично", verdictBadge:"Частично удовлетворено", verdictTone:"partial", note:"Пункт о лишении квартиры признан недействительным, остальные условия сохранены.", year:2024}
+  ]},
+
+  // Нижний Новгород
+  {name:"Денис Кузьмин", specialty:"Трудовые споры", city:"Нижний Новгород", years:7, reviews:39, online:true, tags:["Незаконное увольнение","Невыплата зарплаты","Трудовые конфликты"], price:"2 500", rating:4.5, avatar:"🧑‍💼", cases:[
+    {title:"Компенсация морального вреда за незаконное увольнение", side:"Интересы истца (работник)", court:"Нижегородский районный суд г. Нижнего Новгорода", caseNumber:"№ 2-641/2024", duration:"3 месяца", claimItems:[{label:"Моральный вред",sum:"200 000 ₽"}], claimedTotal:"200 000 ₽", awardedTotal:"60 000 ₽", verdictBadge:"Удовлетворено на 30%", verdictTone:"partial", note:"Факт незаконного увольнения подтверждён, сумма морального вреда снижена судом.", year:2024},
+    {title:"Оспаривание дисциплинарного взыскания и увольнения по статье", side:"Интересы истца (работник)", court:"Нижегородский районный суд г. Нижнего Новгорода", caseNumber:"№ 2-1288/2025", duration:"4 месяца", claimItems:[{label:"Компенсация морального вреда",sum:"100 000 ₽"}], claimedTotal:"100 000 ₽", awardedTotal:"70 000 ₽, запись в трудовой изменена", verdictBadge:"Увольнение отменено", verdictTone:"win", note:"Работодатель не доказал факт грубого нарушения дисциплины.", year:2025}
+  ]},
+  {name:"Светлана Егорова", specialty:"Недвижимость", city:"Нижний Новгород", years:10, reviews:66, online:false, tags:["Сделки купли-продажи","ДДУ","Земельные споры"], price:"3 800", rating:4.7, avatar:"👩‍💼", cases:[
+    {title:"Оспаривание завышенной кадастровой стоимости участка", side:"Интересы собственника", court:"Нижегородский районный суд г. Нижнего Новгорода", caseNumber:"№ 2-390/2024", duration:"5 месяцев", claimItems:[{label:"Оспариваемая кадастровая стоимость",sum:"9 000 000 ₽"}], claimedTotal:"9 000 000 ₽", awardedTotal:"4 500 000 ₽", verdictBadge:"Снижено на 50%", verdictTone:"win", note:"Независимая оценка подтвердила рыночную стоимость вдвое ниже кадастровой.", year:2024},
+    {title:"Спор о границах земельного участка с соседями", side:"Интересы истца", court:"Нижегородский районный суд г. Нижнего Новгорода", caseNumber:"№ 2-2011/2025", duration:"6 месяцев", claimItems:[{label:"Материальный вред от захвата территории",sum:"600 000 ₽"}], claimedTotal:"600 000 ₽", awardedTotal:"600 000 ₽", verdictBadge:"Взыскано полностью", verdictTone:"win", note:"Границы установлены по результатам межевания в пользу клиента.", year:2025}
+  ]},
+
+  // Челябинск
+  {name:"Константин Быков", specialty:"Уголовное право", city:"Челябинск", years:15, reviews:112, online:true, tags:["Защита по уголовным делам","Экономические преступления","Следственные действия"], price:"5 600", rating:4.8, avatar:"🧑‍💼", cases:[
+    {title:"Защита по делу о ДТП со смертельным исходом", side:"Защита обвиняемого", court:"Центральный районный суд г. Челябинска", caseNumber:"№ 1-244/2023", duration:"10 месяцев", claimItems:[{label:"Моральный вред",sum:"3 000 000 ₽"}], claimedTotal:"3 000 000 ₽", awardedTotal:"1 200 000 ₽, срок условный", verdictBadge:"Снижено на 60%", verdictTone:"win", note:"Учтены смягчающие обстоятельства и добровольная компенсация части вреда.", year:2023},
+    {title:"Защита по делу о клевете", side:"Защита обвиняемого", court:"Центральный районный суд г. Челябинска", caseNumber:"№ 1-88/2024", duration:"5 месяцев", claimItems:[{label:"Моральный вред",sum:"500 000 ₽"}], claimedTotal:"500 000 ₽", awardedTotal:"0 ₽", verdictBadge:"В иске отказано полностью", verdictTone:"win", note:"Факт распространения заведомо ложных сведений не доказан.", year:2024}
+  ]},
+  {name:"Ирина Шевцова", specialty:"Корпоративное право", city:"Челябинск", years:9, reviews:55, online:true, tags:["Регистрация бизнеса","Договоры","Корпоративные споры"], price:"6 300", rating:4.6, avatar:"👩‍💼", cases:[
+    {title:"Взыскание неустойки по договору подряда", side:"Интересы заказчика", court:"Арбитражный суд Челябинской области", caseNumber:"№ А76-15530/2024", duration:"3 месяца", claimItems:[{label:"Неустойка за просрочку",sum:"1 900 000 ₽"}], claimedTotal:"1 900 000 ₽", awardedTotal:"1 900 000 ₽", verdictBadge:"Взыскано полностью", verdictTone:"win", note:"Подрядчик признал факт просрочки, спор решён в одно заседание.", year:2024},
+    {title:"Защита товарного знака от незаконного использования", side:"Интересы правообладателя", court:"Арбитражный суд Челябинской области", caseNumber:"№ А76-33042/2025", duration:"6 месяцев", claimItems:[{label:"Компенсация за нарушение",sum:"1 200 000 ₽"}], claimedTotal:"1 200 000 ₽", awardedTotal:"700 000 ₽", verdictBadge:"Взыскано 58%", verdictTone:"partial", note:"Суд снизил компенсацию с учётом масштаба нарушения.", year:2025}
+  ]},
+
+  // Самара
+  {name:"Николай Артемьев", specialty:"Банкротство", city:"Самара", years:11, reviews:71, online:true, tags:["Личное банкротство","Реструктуризация долгов","Защита от кредиторов"], price:"5 000", rating:4.7, avatar:"🧑‍💼", cases:[
+    {title:"Банкротство ИП с накопленным долгом", side:"Интересы должника", court:"Арбитражный суд Самарской области", caseNumber:"№ А55-19274/2024", duration:"8 месяцев", claimItems:[{label:"Долг ИП перед контрагентами",sum:"3 500 000 ₽"}], claimedTotal:"3 500 000 ₽", awardedTotal:"0 ₽ (долг списан)", verdictBadge:"Списано, статус ИП сохранён", verdictTone:"win", note:"Деятельность ИП продолжена после завершения процедуры банкротства.", year:2024},
+    {title:"Защита от субсидиарной ответственности", side:"Интересы бывшего директора", court:"Арбитражный суд Самарской области", caseNumber:"№ А55-40881/2025", duration:"1 год", claimItems:[{label:"Требование о субсидиарной ответственности",sum:"9 000 000 ₽"}], claimedTotal:"9 000 000 ₽", awardedTotal:"0 ₽", verdictBadge:"В иске отказано", verdictTone:"win", note:"Доказано отсутствие вины директора в доведении компании до банкротства.", year:2025}
+  ]},
+  {name:"Анастасия Быстрова", specialty:"Семейное право", city:"Самара", years:6, reviews:33, online:true, tags:["Развод","Алименты","Раздел имущества"], price:"3 100", rating:4.6, avatar:"👩‍💼", cases:[
+    {title:"Раздел ипотечной квартиры", side:"Интересы истицы", court:"Октябрьский районный суд г. Самары", caseNumber:"№ 2-1122/2024", duration:"8 месяцев", claimItems:[{label:"Стоимость квартиры",sum:"8 500 000 ₽"}], claimedTotal:"8 500 000 ₽", awardedTotal:"4 250 000 ₽ (50%)", verdictBadge:"Раздел 50/50", verdictTone:"win", note:"Квартира продана, ипотечный остаток погашен, средства разделены поровну.", year:2024},
+    {title:"Компенсация морального вреда за сокрытие доходов при разводе", side:"Интересы истицы", court:"Октябрьский районный суд г. Самары", caseNumber:"№ 2-660/2025", duration:"4 месяца", claimItems:[{label:"Моральный вред",sum:"300 000 ₽"}], claimedTotal:"300 000 ₽", awardedTotal:"120 000 ₽", verdictBadge:"Удовлетворено на 40%", verdictTone:"partial", note:"Доказан факт сокрытия части дохода при разделе имущества.", year:2025}
+  ]},
+
+  // Омск
+  {name:"Владимир Фролов", specialty:"Недвижимость", city:"Омск", years:13, reviews:82, online:false, tags:["Сделки купли-продажи","Перепланировка","Оспаривание сделок"], price:"3 900", rating:4.7, avatar:"🧑‍💼", cases:[
+    {title:"Взыскание неустойки за нарушение сроков ремонта после залива", side:"Интересы пострадавшего", court:"Центральный районный суд г. Омска", caseNumber:"№ 2-450/2023", duration:"3 месяца", claimItems:[{label:"Неустойка за просрочку ремонта",sum:"480 000 ₽"}], claimedTotal:"480 000 ₽", awardedTotal:"480 000 ₽", verdictBadge:"Взыскано полностью", verdictTone:"win", note:"Подрядчик нарушил согласованные сроки восстановительного ремонта.", year:2023},
+    {title:"Оспаривание предписания о демонтаже перепланировки", side:"Интересы собственника", court:"Центральный районный суд г. Омска", caseNumber:"№ 2-1301/2024", duration:"5 месяцев", claimItems:[{label:"Штраф под угрозой демонтажа",sum:"350 000 ₽"}], claimedTotal:"350 000 ₽", awardedTotal:"0 ₽", verdictBadge:"Перепланировка узаконена", verdictTone:"win", note:"Техническая экспертиза подтвердила безопасность внесённых изменений.", year:2024}
+  ]},
+  {name:"Елена Комарова", specialty:"Трудовые споры", city:"Омск", years:8, reviews:49, online:true, tags:["Незаконное увольнение","Восстановление","Компенсации"], price:"2 700", rating:4.6, avatar:"👩‍💼", cases:[
+    {title:"Компенсация за незаконный перевод на нижеоплачиваемую должность", side:"Интересы истца (работник)", court:"Центральный районный суд г. Омска", caseNumber:"№ 2-892/2023", duration:"3 месяца", claimItems:[{label:"Разница в зарплате",sum:"310 000 ₽"}], claimedTotal:"310 000 ₽", awardedTotal:"190 000 ₽", verdictBadge:"Взыскано 61%", verdictTone:"partial", note:"Перевод признан частично обоснованным производственной необходимостью.", year:2023},
+    {title:"Взыскание среднего заработка за задержку трудовой книжки", side:"Интересы истца (работник)", court:"Центральный районный суд г. Омска", caseNumber:"№ 2-1560/2024", duration:"2 месяца", claimItems:[{label:"Средний заработок за задержку",sum:"95 000 ₽"}], claimedTotal:"95 000 ₽", awardedTotal:"95 000 ₽", verdictBadge:"Взыскано полностью", verdictTone:"win", note:"Работодатель задержал выдачу трудовой книжки на 6 недель.", year:2024}
+  ]},
+
+  // Ростов-на-Дону
+  {name:"Тимур Алиев", specialty:"Корпоративное право", city:"Ростов-на-Дону", years:12, reviews:90, online:true, tags:["Регистрация бизнеса","Договоры","Арбитражные споры"], price:"6 600", rating:4.8, avatar:"🧑‍💼", cases:[
+    {title:"Взыскание дебиторской задолженности с контрагента-банкрота", side:"Интересы кредитора", court:"Арбитражный суд Ростовской области", caseNumber:"№ А53-22190/2023", duration:"7 месяцев", claimItems:[{label:"Задолженность контрагента",sum:"2 600 000 ₽"}], claimedTotal:"2 600 000 ₽", awardedTotal:"1 100 000 ₽", verdictBadge:"Взыскано 42%", verdictTone:"partial", note:"Требование включено в реестр кредиторов третьей очереди.", year:2023},
+    {title:"Спор о разделе бизнеса при выходе партнёра", side:"Интересы выходящего партнёра", court:"Арбитражный суд Ростовской области", caseNumber:"№ А53-38754/2024", duration:"9 месяцев", claimItems:[{label:"Стоимость доли",sum:"9 000 000 ₽"}], claimedTotal:"9 000 000 ₽", awardedTotal:"4 500 000 ₽", verdictBadge:"Компенсация 4,5 млн ₽", verdictTone:"win", note:"Стоимость доли определена по результатам независимой оценки бизнеса.", year:2024}
+  ]},
+  {name:"Виктор Савельев", specialty:"Уголовное право", city:"Ростов-на-Дону", years:17, reviews:143, online:true, tags:["Защита по уголовным делам","Мошенничество","Экономические преступления"], price:"5 900", rating:4.8, avatar:"🧑‍💼", cases:[
+    {title:"Защита по налоговому преступлению", side:"Защита обвиняемого", court:"Ленинский районный суд г. Ростова-на-Дону", caseNumber:"№ 1-355/2024", duration:"1 год 1 месяц", claimItems:[{label:"Требование ФНС",sum:"12 000 000 ₽"}], claimedTotal:"12 000 000 ₽", awardedTotal:"0 ₽", verdictBadge:"Обвинение снято", verdictTone:"win", note:"Расчёт недоимки признан ошибочным, дело прекращено.", year:2024},
+    {title:"Защита по делу о превышении самообороны", side:"Защита обвиняемого", court:"Ленинский районный суд г. Ростова-на-Дону", caseNumber:"№ 1-120/2025", duration:"6 месяцев", claimItems:[{label:"Гражданский иск потерпевшего",sum:"2 000 000 ₽"}], claimedTotal:"2 000 000 ₽", awardedTotal:"300 000 ₽", verdictBadge:"Снижено на 85%", verdictTone:"win", note:"Действия переквалифицированы на правомерную самооборону.", year:2025}
+  ]},
+
+  // Уфа
+  {name:"Айгуль Валиева", specialty:"Семейное право", city:"Уфа", years:9, reviews:64, online:true, tags:["Развод","Раздел имущества","Опека над детьми"], price:"3 000", rating:4.7, avatar:"👩‍💼", cases:[
+    {title:"Оспаривание отцовства и взыскание алиментов задним числом", side:"Интересы истицы", court:"Кировский районный суд г. Уфы", caseNumber:"№ 2-980/2023", duration:"5 месяцев", claimItems:[{label:"Задолженность по алиментам",sum:"680 000 ₽"}], claimedTotal:"680 000 ₽", awardedTotal:"680 000 ₽", verdictBadge:"Взыскано полностью", verdictTone:"win", note:"Отцовство подтверждено экспертизой ДНК, задолженность взыскана за 3 года.", year:2023},
+    {title:"Взыскание неустойки по алиментному соглашению", side:"Интересы истицы", court:"Кировский районный суд г. Уфы", caseNumber:"№ 2-1704/2024", duration:"3 месяца", claimItems:[{label:"Неустойка за просрочку",sum:"320 000 ₽"}], claimedTotal:"320 000 ₽", awardedTotal:"320 000 ₽", verdictBadge:"Взыскано полностью", verdictTone:"win", note:"Взыскание произведено через службу судебных приставов.", year:2024}
+  ]},
+  {name:"Тимофей Кириллов", specialty:"Банкротство", city:"Уфа", years:10, reviews:58, online:false, tags:["Личное банкротство","Списание кредитов","Работа с приставами"], price:"4 700", rating:4.5, avatar:"🧑‍💼", cases:[
+    {title:"Списание задолженности по микрозаймам", side:"Интересы должника", court:"Арбитражный суд Республики Башкортостан", caseNumber:"№ А07-16632/2023", duration:"6 месяцев", claimItems:[{label:"Долг по микрозаймам с процентами",sum:"1 100 000 ₽"}], claimedTotal:"1 100 000 ₽", awardedTotal:"0 ₽ (долг списан)", verdictBadge:"Списано 100%", verdictTone:"win", note:"Долг с учётом штрафов и процентов признан безнадёжным.", year:2023},
+    {title:"Банкротство с погашением долга по мировому соглашению", side:"Интересы должника", court:"Арбитражный суд Республики Башкортостан", caseNumber:"№ А07-29915/2024", duration:"7 месяцев", claimItems:[{label:"Первоначальный долг",sum:"3 000 000 ₽"}], claimedTotal:"3 000 000 ₽", awardedTotal:"1 200 000 ₽ по мировому соглашению", verdictBadge:"Снижено на 60%", verdictTone:"win", note:"Кредиторы согласились на дисконт при единовременной выплате.", year:2024}
+  ]},
+
+  // Красноярск
+  {name:"Кирилл Овчинников", specialty:"Трудовые споры", city:"Красноярск", years:7, reviews:36, online:true, tags:["Незаконное увольнение","Невыплата зарплаты","Трудовые споры"], price:"2 400", rating:4.5, avatar:"🧑‍💼", cases:[
+    {title:"Оспаривание увольнения за прогул", side:"Интересы истца (работник)", court:"Центральный районный суд г. Красноярска", caseNumber:"№ 2-540/2024", duration:"3 месяца", claimItems:[{label:"Компенсация морального вреда",sum:"120 000 ₽"}], claimedTotal:"120 000 ₽", awardedTotal:"Восстановлен на работе, увольнение отменено", verdictBadge:"Увольнение отменено", verdictTone:"win", note:"Доказано уважительное отсутствие — вызов скорой помощи родственнику.", year:2024},
+    {title:"Взыскание зарплаты при неофициальном трудоустройстве", side:"Интересы истца (работник)", court:"Центральный районный суд г. Красноярска", caseNumber:"№ 2-1233/2025", duration:"5 месяцев", claimItems:[{label:"Невыплаченная зарплата",sum:"540 000 ₽"}], claimedTotal:"540 000 ₽", awardedTotal:"400 000 ₽", verdictBadge:"Взыскано 74%", verdictTone:"partial", note:"Факт трудовых отношений установлен через переписку и показания свидетелей.", year:2025}
+  ]},
+  {name:"Валерия Морозова", specialty:"Недвижимость", city:"Красноярск", years:11, reviews:73, online:true, tags:["Сделки купли-продажи","ДДУ","Земельные вопросы"], price:"4 100", rating:4.7, avatar:"👩‍💼", cases:[
+    {title:"Взыскание убытков с риелтора за срыв сделки", side:"Интересы клиента", court:"Центральный районный суд г. Красноярска", caseNumber:"№ 2-770/2024", duration:"4 месяца", claimItems:[{label:"Убытки от сорванной сделки",sum:"900 000 ₽"}], claimedTotal:"900 000 ₽", awardedTotal:"400 000 ₽", verdictBadge:"Взыскано 44%", verdictTone:"partial", note:"Часть убытков признана недоказанной по размеру.", year:2024},
+    {title:"Выселение недобросовестного арендатора с взысканием задолженности", side:"Интересы арендодателя", court:"Центральный районный суд г. Красноярска", caseNumber:"№ 2-1980/2025", duration:"3 месяца", claimItems:[{label:"Задолженность по аренде",sum:"620 000 ₽"}], claimedTotal:"620 000 ₽", awardedTotal:"620 000 ₽", verdictBadge:"Взыскано полностью", verdictTone:"win", note:"Арендатор выселен, задолженность взыскана через приставов.", year:2025}
+  ]},
+
+  // Пермь
+  {name:"Олег Данилов", specialty:"Уголовное право", city:"Пермь", years:14, reviews:99, online:true, tags:["Защита по уголовным делам","Обжалование приговора","Следствие"], price:"5 500", rating:4.7, avatar:"🧑‍💼", cases:[
+    {title:"Обжалование приговора по делу о грабеже", side:"Защита осуждённого (апелляция)", court:"Пермский краевой суд (апелляционная инстанция)", caseNumber:"№ 22-611/2023", duration:"2 месяца", claimItems:[{label:"Гражданский иск потерпевшего",sum:"700 000 ₽"}], claimedTotal:"700 000 ₽", awardedTotal:"250 000 ₽", verdictBadge:"Срок и иск снижены", verdictTone:"win", note:"Апелляция снизила срок наказания и сумму компенсации потерпевшему.", year:2023},
+    {title:"Защита по делу о врачебной ошибке", side:"Защита обвиняемого врача", court:"Ленинский районный суд г. Перми", caseNumber:"№ 1-402/2024", duration:"1 год", claimItems:[{label:"Иск семьи погибшего",sum:"5 000 000 ₽"}], claimedTotal:"5 000 000 ₽", awardedTotal:"1 500 000 ₽", verdictBadge:"Снижено на 70%", verdictTone:"win", note:"Экспертиза не подтвердила прямую причинно-следственную связь в полном объёме.", year:2024}
+  ]},
+  {name:"Полина Шестакова", specialty:"Корпоративное право", city:"Пермь", years:8, reviews:51, online:true, tags:["Регистрация бизнеса","Договоры","Налоговые споры"], price:"6 100", rating:4.6, avatar:"👩‍💼", cases:[
+    {title:"Оспаривание итогов тендера с взысканием убытков", side:"Интересы участника тендера", court:"Арбитражный суд Пермского края", caseNumber:"№ А50-24519/2024", duration:"6 месяцев", claimItems:[{label:"Упущенная выгода",sum:"3 800 000 ₽"}], claimedTotal:"3 800 000 ₽", awardedTotal:"1 600 000 ₽", verdictBadge:"Взыскано 42%", verdictTone:"partial", note:"Нарушение процедуры тендера доказано частично.", year:2024},
+    {title:"Взыскание убытков за нарушение условий NDA конкурентом", side:"Интересы пострадавшей компании", court:"Арбитражный суд Пермского края", caseNumber:"№ А50-11087/2025", duration:"8 месяцев", claimItems:[{label:"Убытки от утечки данных",sum:"5 000 000 ₽"}], claimedTotal:"5 000 000 ₽", awardedTotal:"2 000 000 ₽", verdictBadge:"Взыскано 40%", verdictTone:"partial", note:"Доказана лишь часть заявленного ущерба от использования конфиденциальной информации.", year:2025}
+  ]},
+
+  // Воронеж
+  {name:"Григорий Плотников", specialty:"Банкротство", city:"Воронеж", years:9, reviews:45, online:false, tags:["Личное банкротство","Реструктуризация","Кредитные споры"], price:"4 600", rating:4.5, avatar:"🧑‍💼", cases:[
+    {title:"Освобождение поручителя от долга", side:"Интересы поручителя", court:"Арбитражный суд Воронежской области", caseNumber:"№ А14-9284/2024", duration:"4 месяца", claimItems:[{label:"Требование к поручителю",sum:"2 300 000 ₽"}], claimedTotal:"2 300 000 ₽", awardedTotal:"0 ₽", verdictBadge:"Поручительство прекращено", verdictTone:"win", note:"Истёк срок поручительства, установленный договором.", year:2024},
+    {title:"Защита автомобиля как средства заработка от продажи в банкротстве", side:"Интересы должника", court:"Арбитражный суд Воронежской области", caseNumber:"№ А14-20136/2025", duration:"5 месяцев", claimItems:[{label:"Стоимость автомобиля",sum:"900 000 ₽"}], claimedTotal:"900 000 ₽", awardedTotal:"Автомобиль сохранён", verdictBadge:"Актив защищён", verdictTone:"win", note:"Автомобиль признан необходимым для профессиональной деятельности должника.", year:2025}
+  ]},
+  {name:"Дарья Кожевникова", specialty:"Семейное право", city:"Воронеж", years:7, reviews:42, online:true, tags:["Развод","Алименты","Брачный договор"], price:"2 900", rating:4.6, avatar:"👩‍💼", cases:[
+    {title:"Раздел загородного дома и земельного участка", side:"Интересы клиента (муж)", court:"Центральный районный суд г. Воронежа", caseNumber:"№ 2-1385/2023", duration:"8 месяцев", claimItems:[{label:"Дом с участком",sum:"15 000 000 ₽"}], claimedTotal:"15 000 000 ₽", awardedTotal:"Дом клиенту, компенсация 3 200 000 ₽ супруге", verdictBadge:"Дом сохранён за клиентом", verdictTone:"win", note:"Доказано преимущественное право клиента на объект как на рабочее пространство.", year:2023},
+    {title:"Лишение родительских прав отца-должника по алиментам", side:"Интересы истицы (мать)", court:"Центральный районный суд г. Воронежа", caseNumber:"№ 2-640/2025", duration:"3 месяца", claimItems:[{label:"Задолженность по алиментам",sum:"540 000 ₽"}], claimedTotal:"540 000 ₽", awardedTotal:"540 000 ₽", verdictBadge:"Взыскано полностью", verdictTone:"win", note:"Отец лишён родительских прав, задолженность взыскана через приставов.", year:2025}
+  ]},
+
+  // Краснодар
+  {name:"Артур Мелконян", specialty:"Недвижимость", city:"Краснодар", years:12, reviews:85, online:true, tags:["Сделки купли-продажи","ДДУ","Курортная недвижимость"], price:"4 500", rating:4.8, avatar:"🧑‍💼", cases:[
+    {title:"Возврат имущества по сделке, признанной мнимой", side:"Интересы конкурсного кредитора", court:"Арбитражный суд Краснодарского края", caseNumber:"№ А32-17765/2023", duration:"7 месяцев", claimItems:[{label:"Стоимость выведенного объекта",sum:"5 800 000 ₽"}], claimedTotal:"5 800 000 ₽", awardedTotal:"5 800 000 ₽", verdictBadge:"Возвращено полностью", verdictTone:"win", note:"Сделка признана мнимой, совершённой для сокрытия имущества от кредиторов.", year:2023},
+    {title:"Раздел коммерческой недвижимости между партнёрами", side:"Интересы одного из партнёров", court:"Первомайский районный суд г. Краснодара", caseNumber:"№ 2-2290/2024", duration:"6 месяцев", claimItems:[{label:"Стоимость объекта",sum:"11 000 000 ₽"}], claimedTotal:"11 000 000 ₽", awardedTotal:"4 800 000 ₽ компенсацией", verdictBadge:"Компенсация 4,8 млн ₽", verdictTone:"win", note:"Объект оставлен управляющему партнёру, второй получил денежную компенсацию доли.", year:2024}
+  ]},
+  {name:"Марина Ткачёва", specialty:"Трудовые споры", city:"Краснодар", years:6, reviews:31, online:true, tags:["Незаконное увольнение","Восстановление","Невыплата зарплаты"], price:"2 600", rating:4.5, avatar:"👩‍💼", cases:[
+    {title:"Компенсация за производственную травму", side:"Интересы истца (работник)", court:"Первомайский районный суд г. Краснодара", caseNumber:"№ 2-812/2023", duration:"5 месяцев", claimItems:[{label:"Моральный и материальный вред",sum:"800 000 ₽"}], claimedTotal:"800 000 ₽", awardedTotal:"550 000 ₽", verdictBadge:"Взыскано 69%", verdictTone:"partial", note:"Работодатель частично оспорил степень своей вины в происшествии.", year:2023},
+    {title:"Взыскание выходного пособия при ликвидации компании", side:"Интересы истца (работник)", court:"Первомайский районный суд г. Краснодара", caseNumber:"№ 2-1455/2024", duration:"2 месяца", claimItems:[{label:"Выходное пособие",sum:"260 000 ₽"}], claimedTotal:"260 000 ₽", awardedTotal:"260 000 ₽", verdictBadge:"Взыскано полностью", verdictTone:"win", note:"Пособие выплачено через конкурсного управляющего в приоритетном порядке.", year:2024}
+  ]},
+];
+
+function renderTags(){
+  document.getElementById('tags-personal').innerHTML = tagsPersonal.map(t => `<span class="practice-tag" onclick="filterByTag('${t}')">${t}</span>`).join('');
+  document.getElementById('tags-business').innerHTML = tagsBusiness.map(t => `<span class="practice-tag" onclick="filterByTag('${t}')">${t}</span>`).join('');
+}
+
+function filterByTag(tag){
+  window.filteredLawyers = lawyers.filter(l =>
+    l.specialty.toLowerCase().includes(tag.toLowerCase()) ||
+    l.tags.some(t => t.toLowerCase().includes(tag.toLowerCase()))
+  );
+  
+  renderLawyers();
+  document.getElementById('results-section').scrollIntoView({behavior:'smooth'});
+}
+
+function starDisplay(rating){
+  const full = Math.floor(rating);
+  const half = rating - full >= 0.5;
+  return '★'.repeat(full) + (half ? '½' : '');
+}
+
+function renderLawyers(){
+  const sort = document.getElementById('sort-select').value;
+  let list = [...(window.filteredLawyers || lawyers)];
+  if(sort === 'rating') list.sort((a,b) => b.rating - a.rating);
+  if(sort === 'reviews') list.sort((a,b) => b.reviews - a.reviews);
+  if(sort === 'price') list.sort((a,b) => parseInt(a.price.replace(/\D/g,'')) - parseInt(b.price.replace(/\D/g,'')));
+
+  document.getElementById('results-count').innerHTML = `<b>${list.length}</b> юрист${list.length===1?'':'ов'} найдено`;
+
+  document.getElementById('lawyer-list').innerHTML = list.map((l, i) => `
+    <div class="lawyer-card" onclick="openLawyerProfile(${i})">
+      <div class="avatar">${l.avatar}</div>
+      <div class="lawyer-body">
+        <div class="name-row">
+          <span class="lawyer-name">${l.name}</span>
+          <span class="verified">✓ Проверен</span>
+        </div>
+        <div class="lawyer-specialty">${l.specialty} · ${l.city}</div>
+        <div class="lawyer-facts">
+          <span>${l.years} лет опыта</span>
+          <span>${l.reviews} отзывов</span>
+          <span>${l.online ? 'Онлайн' : 'Офлайн'}</span>
+        </div>
+        <div class="tag-row">${l.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+        <div class="card-bottom">
+          <div class="price-block"><b>${l.price} ₽</b><span class="unit">/ час</span></div>
+          <div class="rating"><span class="stars">${starDisplay(l.rating)}</span><span class="num">${l.rating}</span></div>
+        </div>
+      </div>
+    </div>
+  `).join('');
+
+  window.currentList = list;
+}
+
+function normalizeSpecialty(specialty){
+  return specialty;
+}
+
+const specialtyKeywords = {
+  "Семейное право": ["развод","раздел имущества","алимент","опек","брак","супруг"],
+  "Трудовые споры": ["увольнен","зарплат","труд","восстановлен","начальник","работодател"],
+  "Уголовное право": ["убийств","уголовн","обвиня","кража","мошенничеств","арест","следстви","суде","преступлен","полиц","задержа"],
+  "Банкротство": ["банкрот","долг","кредит","пристав"],
+  "Недвижимость": ["квартир","дом","ддУ","дду","сделк","недвиж","перепланир","участок"],
+  "Корпоративное право": ["бизнес","ооо","договор","компани","партнер","регистрац","контрагент"]
+};
+
+function findSpecialtyByKeywords(text){
+  const lower = text.toLowerCase();
+  for(const specialty in specialtyKeywords){
+    if(specialtyKeywords[specialty].some(k => lower.includes(k))) return specialty;
+  }
+  return null;
+}
+
+function runSearch(){
+  const rawQuery = document.getElementById('f-query').value.trim().toLowerCase();
+  const practice = document.getElementById('f-practice').value;
+  const city = document.getElementById('f-city').value;
+
+  let list = lawyers;
+
+  if(practice){
+    list = list.filter(l => l.specialty === practice);
+  }
+
+  if(city){
+    const byCity = list.filter(l => l.city === city);
+    list = byCity;
+  }
+
+  if(rawQuery){
+    const matchedSpecialty = findSpecialtyByKeywords(rawQuery);
+    if(matchedSpecialty){
+      const bySpecialty = list.filter(l => l.specialty === matchedSpecialty);
+      if(bySpecialty.length) list = bySpecialty;
+    } else {
+      const byText = list.filter(l =>
+        l.name.toLowerCase().includes(rawQuery) ||
+        l.specialty.toLowerCase().includes(rawQuery) ||
+        l.city.toLowerCase().includes(rawQuery) ||
+        l.tags.some(t => t.toLowerCase().includes(rawQuery))
+      );
+      if(byText.length) list = byText;
+    }
+  }
+
+  
+
+  window.filteredLawyers = list;
+  renderLawyers();
+  document.getElementById('results-section').scrollIntoView({behavior:'smooth'});
+}
+
+function updateChipText(selectId, textId, placeholder){
+  const val = document.getElementById(selectId).value;
+  const el = document.getElementById(textId);
+  el.textContent = val || placeholder;
+  el.classList.toggle('chip-active', !!val);
+}
+
+function showView(view){
+  if(view === 'cabinet' && !window.currentUser){
+    openLogin();
+    return;
+  }
+  document.querySelectorAll('.view').forEach(v => v.classList.remove('show'));
+  const target = document.getElementById('view-' + view);
+  if(target) target.classList.add('show');
+  window.scrollTo(0,0);
+}
+
+function openArticlePage(tag, idx){
+  const source = tag === 'world' ? WORLD_NEWS : tag === 'ru' ? RU_NEWS : VIDEO_ITEMS;
+  const item = source[idx];
+  if(!item) return;
+  window.articleReturnView = tag === 'video' ? 'video' : 'news';
+
+  const headline = tag === 'video' ? item.headline : `${item.org} ${item.title}`;
+  document.getElementById('article-page-content').innerHTML = `
+    <div class="contact-lawyer-line">${item.icon} <b>${item.org}</b>${item.date ? ' · ' + item.date : ''}</div>
+    <h2 class="article-page-title">${headline}</h2>
+    ${item.hasVideo ? `<div class="video-placeholder"><span class="video-placeholder-icon">🎥</span><span>Видео</span></div>` : ''}
+    <p class="article-page-body">${item.body}</p>
+  `;
+  showView('article');
+}
+
+function goBackFromArticle(){
+  showView(window.articleReturnView || 'home');
+}
+
+function showCabTab(tab, e){
+  e.preventDefault();
+  document.querySelectorAll('.cab-tab').forEach(el => el.style.display = 'none');
+  document.getElementById('cab-' + tab).style.display = 'block';
+  document.querySelectorAll('.cab-nav button').forEach(a => a.classList.remove('active'));
+  e.target.closest('button').classList.add('active');
+  if(tab === 'messages') renderCabMessages();
+  renderMyCases();
+}
+
+/* ---------- Cases & requests (separate from chats) ---------- */
+
+const CASE_STATUS_META = {
+  pending: {label:"Ожидает ответа юриста", cls:"status-pending"},
+  active:  {label:"В работе", cls:"status-active"},
+  done:    {label:"Завершено", cls:"status-done"}
+};
+
+// Starts empty on purpose — a case only appears once a real request was sent through the site.
+window.myCases = [];
+
+function isLawyerUser(){
+  return !!(window.currentUser && window.currentUser.type === 'lawyer');
+}
+
+function caseRowHtml(c, i){
+  const meta = CASE_STATUS_META[c.status];
+  return `
+    <div class="case-card case-card-clickable" onclick="openCaseStatus(${i})">
+      <div><div class="case-title">${c.title} — ${c.lawyer}</div><div class="case-sub">${c.specialty}</div></div>
+      <span class="status-pill ${meta.cls}">${meta.label}</span>
+    </div>
+  `;
+}
+
+function requestRowHtml(c, i){
+  const meta = CASE_STATUS_META[c.status];
+  let actionBtn = '';
+  if(c.status === 'pending') actionBtn = `<button class="btn btn-sm btn-primary" onclick="event.stopPropagation(); advanceCaseStatus(${i})">Принять в работу</button>`;
+  else if(c.status === 'active') actionBtn = `<button class="btn btn-sm btn-outline" onclick="event.stopPropagation(); advanceCaseStatus(${i})">Завершить дело</button>`;
+  return `
+    <div class="case-card case-card-clickable" onclick="openCaseStatus(${i})">
+      <div><div class="case-title">${c.title}</div><div class="case-sub">${c.specialty} · заявка от клиента</div></div>
+      <div class="request-row-actions">
+        <span class="status-pill ${meta.cls}">${meta.label}</span>
+        ${actionBtn}
+      </div>
+    </div>
+  `;
+}
+
+function advanceCaseStatus(){ showToast("Подключаем сервис…"); }
+
+function renderMyCases(){
+  if(isLawyerUser()) renderLawyerSection();
+  else renderClientCases();
+  refreshOverviewStats();
+}
+
+function renderClientCases(){
+  const html = window.myCases.map((c, i) => caseRowHtml(c, i)).join('');
+  const empty = `<div class="chat-empty" style="margin:24px 0;">Дел пока нет — отправьте обращение юристу через кнопку «Доверить дело юристу» на его анкете</div>`;
+  const overviewBox = document.getElementById('cab-overview-cases');
+  const casesBox = document.getElementById('cab-cases-list');
+  if(overviewBox) overviewBox.innerHTML = html || empty;
+  if(casesBox) casesBox.innerHTML = html || empty;
+
+  document.querySelectorAll('.cases-badge').forEach(b => b.textContent = window.myCases.filter(c => c.status !== 'done').length);
+}
+
+function renderLawyerSection(){
+  const myName = window.currentUser.lawyerName;
+  const items = window.myCases.map((c, i) => ({c, i})).filter(x => x.c.lawyer === myName);
+  const html = items.length
+    ? items.map(x => requestRowHtml(x.c, x.i)).join('')
+    : `<div class="chat-empty" style="margin:24px 0;">Заявок от клиентов пока нет</div>`;
+
+  const overviewBox = document.getElementById('cab-overview-cases');
+  const reqBox = document.getElementById('cab-requests-list');
+  if(overviewBox) overviewBox.innerHTML = html;
+  if(reqBox) reqBox.innerHTML = html;
+
+  document.querySelectorAll('.requests-badge').forEach(b => b.textContent = items.filter(x => x.c.status === 'pending').length);
+
+  renderLawProfile();
+}
+
+function renderLawProfile(){
+  const box = document.getElementById('cab-lawprofile-content');
+  const u = window.currentUser;
+  if(!box || !u) return;
+  const l = u.lawyerName ? findLawyerByName(u.lawyerName) : null;
+
+  const publicBlock = l ? `
+    <div class="cd-facts" style="margin-bottom:24px;">
+      <div class="cd-fact"><span class="cd-fact-label">Специализация</span><span class="cd-fact-value">${l.specialty}</span></div>
+      <div class="cd-fact"><span class="cd-fact-label">Город</span><span class="cd-fact-value">${l.city}</span></div>
+      <div class="cd-fact"><span class="cd-fact-label">Опыт</span><span class="cd-fact-value">${l.years} лет</span></div>
+      <div class="cd-fact"><span class="cd-fact-label">Рейтинг</span><span class="cd-fact-value">${l.rating} ★ (${l.reviews} отзывов)</span></div>
+    </div>
+  ` : `<div class="chat-empty" style="margin-bottom:24px;">Публичная анкета появится после проверки документов модератором платформы.</div>`;
+
+  const credBlock = u.credentials ? `
+    <div class="cd-facts">
+      <div class="cd-fact"><span class="cd-fact-label">Статус</span><span class="cd-fact-value">${u.credentials.status}</span></div>
+      <div class="cd-fact"><span class="cd-fact-label">Реестровый номер</span><span class="cd-fact-value">${u.credentials.regNumber}</span></div>
+      <div class="cd-fact"><span class="cd-fact-label">Коллегия адвокатов</span><span class="cd-fact-value">${u.credentials.chamber}</span></div>
+      <div class="cd-fact"><span class="cd-fact-label">Дата присвоения статуса</span><span class="cd-fact-value">${u.credentials.dateIssued}</span></div>
+      <div class="cd-fact"><span class="cd-fact-label">ИНН</span><span class="cd-fact-value">${u.credentials.inn}</span></div>
+    </div>
+    <div class="field-hint" style="margin-top:16px;">Данные ведутся согласно ФЗ № 63 «Об адвокатской деятельности и адвокатуре в РФ» и публикуются в региональном реестре адвокатов.</div>
+  ` : `<div class="chat-empty">Регистрационные данные ещё не поданы на верификацию.</div>`;
+
+  box.innerHTML = `
+    <div class="profile-section-label">ПУБЛИЧНЫЙ ПРОФИЛЬ</div>
+    ${publicBlock}
+    <div class="profile-section-label">РЕГИСТРАЦИОННЫЕ ДАННЫЕ</div>
+    ${credBlock}
+  `;
+}
+
+function refreshOverviewStats(){
+  const s1 = document.getElementById('stat-1'), s1l = document.getElementById('stat-1-label');
+  const s2 = document.getElementById('stat-2'), s2l = document.getElementById('stat-2-label');
+  const s3 = document.getElementById('stat-3'), s3l = document.getElementById('stat-3-label');
+  if(!s1) return;
+
+  if(isLawyerUser()){
+    const myName = window.currentUser.lawyerName;
+    const myItems = window.myCases.filter(c => c.lawyer === myName);
+    s1.textContent = myItems.filter(c => c.status === 'pending').length;
+    s1l.textContent = 'новых заявок';
+    s2.textContent = myItems.filter(c => c.status === 'active').length;
+    s2l.textContent = 'дел в работе';
+    const l = findLawyerByName(myName);
+    s3.textContent = l ? l.rating : '—';
+    s3l.textContent = 'рейтинг';
+  } else {
+    s1.textContent = window.myCases.filter(c => c.status !== 'done').length;
+    s1l.textContent = 'активных дела';
+    s2.textContent = Object.keys(window.chatThreads).filter(n => window.chatThreads[n].length > 0).length;
+    s2l.textContent = 'сообщений';
+    s3.textContent = '3';
+    s3l.textContent = 'юриста в избранном';
+  }
+}
+
+function openCaseStatus(i){
+  const c = window.myCases[i];
+  if(!c) return;
+  const meta = CASE_STATUS_META[c.status];
+  const btnLabel = isLawyerUser() ? 'Открыть чат с клиентом' : 'Написать юристу по делу';
+
+  document.getElementById('case-status-content').innerHTML = `
+    <div class="case-status-title">${c.title}</div>
+    <div class="case-status-sub">${c.specialty} · юрист ${c.lawyer}</div>
+    <div class="case-status-pill-row"><span class="status-pill ${meta.cls}">${meta.label}</span></div>
+    <div class="case-status-note">${c.note}</div>
+    <button class="btn btn-primary profile-contact-btn" onclick="closeCaseStatus(); openChat('${c.lawyer}')">${btnLabel}</button>
+  `;
+  document.getElementById('case-status-overlay').classList.add('show');
+}
+
+function closeCaseStatus(){
+  document.getElementById('case-status-overlay').classList.remove('show');
+}
+
+function renderCabMessages(){
+  const container = document.getElementById('cab-messages-list');
+  if(!container) return;
+  const lawyerView = isLawyerUser();
+  let names = Object.keys(window.chatThreads).filter(n => window.chatThreads[n].length > 0);
+  if(lawyerView) names = names.filter(n => n === window.currentUser.lawyerName);
+
+  if(names.length === 0){
+    container.innerHTML = `<div class="chat-empty" style="margin:30px 0;">${lawyerView ? 'Пока нет сообщений от клиентов' : 'Сообщений пока нет — напишите юристу на его странице'}</div>`;
+    return;
+  }
+
+  container.innerHTML = names.map(name => {
+    const thread = window.chatThreads[name];
+    const last = thread[thread.length - 1];
+    const mineFrom = lawyerView ? 'lawyer' : 'me';
+    const label = lawyerView ? 'Клиент' : name;
+    return `
+      <div class="case-card case-card-clickable" onclick="openChat('${escapeHtml(name)}')">
+        <div><div class="case-title">${escapeHtml(label)}</div><div class="case-sub cab-msg-preview">${last.from === mineFrom ? 'Вы: ' : ''}${escapeHtml(last.text)}</div></div>
+        <span class="cab-msg-time">${last.time}</span>
+      </div>
+    `;
+  }).join('');
+}
+
+/* ---------- Auth ---------- */
+
+const ACCOUNTS = [];
+
+window.currentUser = null;
+
+function openLogin(){
+  document.getElementById('login-error').textContent = '';
+  document.getElementById('login-overlay').classList.add('show');
+  document.getElementById('login-pass').value = '';
+  document.getElementById('login-pass').focus();
+}
+
+function closeLogin(){
+  document.getElementById('login-overlay').classList.remove('show');
+}
+
+function submitLogin(){ showToast("Подключаем сервис…"); }
+
+/* ---------- Registration (no database — new accounts live only in this browser tab) ---------- */
+
+window.registerType = 'person';
+
+function setRegisterType(type){
+  window.registerType = type;
+  document.getElementById('register-toggle-person').classList.toggle('active', type === 'person');
+  document.getElementById('register-toggle-lawyer').classList.toggle('active', type === 'lawyer');
+  
+}
+
+function openRegister(){
+  closeLogin();
+  document.getElementById('register-name').value = '';
+  document.getElementById('register-error').textContent = '';
+  setRegisterType('person');
+  document.getElementById('register-overlay').classList.add('show');
+}
+
+function closeRegister(){
+  document.getElementById('register-overlay').classList.remove('show');
+}
+
+function submitRegister(){ showToast("Подключаем сервис…"); }
+
+function applyLoggedInState(){
+  const u = window.currentUser;
+  if(!u) return;
+
+  document.getElementById('login-btn').textContent = u.first;
+  document.getElementById('login-btn').onclick = () => showView('cabinet');
+
+  document.getElementById('cab-avatar').textContent = u.avatar;
+  document.getElementById('cab-name').textContent = u.login;
+  document.getElementById('cab-role').textContent = u.role;
+  document.getElementById('cab-welcome').textContent = 'Добро пожаловать, ' + u.first;
+  document.getElementById('settings-sub').textContent = u.login + ' · ' + u.role;
+
+  document.querySelectorAll('.cab-admin-link').forEach(el => el.style.display = u.isAdmin ? 'flex' : 'none');
+  document.querySelectorAll('.cab-lawyer-link').forEach(el => el.style.display = u.type === 'lawyer' ? 'flex' : 'none');
+  document.querySelectorAll('.cab-client-link').forEach(el => el.style.display = u.type === 'lawyer' ? 'none' : 'flex');
+
+  const countrySel = document.getElementById('settings-country');
+  const langSel = document.getElementById('settings-language');
+  const userCountry = u.country || 'Россия';
+  if(countrySel) countrySel.value = userCountry;
+  populateSettingsCities(userCountry, u.region || '');
+  if(langSel) langSel.value = u.language || 'Русский';
+
+  renderMyCases();
+}
+
+const CITY_OPTIONS_BY_COUNTRY = {
+  "Россия": ["Москва","Санкт-Петербург","Новосибирск","Екатеринбург","Казань","Нижний Новгород","Челябинск","Самара","Омск","Ростов-на-Дону","Уфа","Красноярск","Пермь","Воронеж","Краснодар"],
+  "Беларусь": ["Минск","Гомель","Могилёв","Витебск","Гродно","Брест"],
+  "Казахстан": ["Алматы","Астана","Шымкент","Караганда","Актобе","Павлодар"]
+};
+
+function populateSettingsCities(country, selectedCity){
+  const sel = document.getElementById('settings-region');
+  if(!sel) return;
+  const cities = CITY_OPTIONS_BY_COUNTRY[country] || [];
+  sel.innerHTML = '<option value="">Регион / город</option>' + cities.map(c => `<option>${c}</option>`).join('');
+  sel.value = selectedCity && cities.includes(selectedCity) ? selectedCity : '';
+}
+
+function onSettingsCountryChange(country){
+  populateSettingsCities(country);
+  if(window.currentUser){
+    window.currentUser.country = country;
+    window.currentUser.region = '';
+  }
+  showToast('Сохранено: ' + country);
+}
+
+function updateUserSetting(field, value){
+  if(window.currentUser) window.currentUser[field] = value;
+  showToast('Сохранено: ' + value);
+}
+
+function logout(){
+  window.currentUser = null;
+  document.getElementById('login-btn').textContent = 'Войти';
+  document.getElementById('login-btn').onclick = openLogin;
+  document.querySelectorAll('.cab-admin-link').forEach(el => el.style.display = 'none');
+  document.querySelectorAll('.cab-lawyer-link').forEach(el => el.style.display = 'none');
+  document.querySelectorAll('.cab-client-link').forEach(el => el.style.display = 'flex');
+  showView('home');
+  showToast('Вы вышли из аккаунта');
+}
+
+document.getElementById('login-pass').addEventListener('keydown', function(e){
+  if(e.key === 'Enter') submitLogin();
+});
+
+/* ---------- Lawyer profile ---------- */
+
+window.contactedLawyers = new Set();
+
+function profileActionsHtml(l){
+  if(window.contactedLawyers.has(l.name)){
+    return `
+      <button class="btn btn-outline profile-contact-btn" onclick="openChat('${l.name}')">Открыть чат</button>
+      <button class="btn btn-primary profile-contact-btn" onclick="openCaseIntakeForm('${l.name}')">Доверить дело юристу</button>
+    `;
+  }
+  return `<button class="btn btn-primary profile-contact-btn" onclick="openChat('${l.name}')">Написать юристу</button>`;
+}
+
+function openLawyerProfile(idx){
+  const l = window.currentList[idx];
+  if(!l) return;
+  window.currentLawyer = l;
+
+  document.getElementById('lawyer-modal-content').innerHTML = `
+    <div class="profile-head">
+      <div class="avatar">${l.avatar}</div>
+      <div>
+        <div class="profile-name">${l.name} <span class="verified">✓ Проверен</span></div>
+        <div class="profile-specialty">${l.specialty} · ${l.city}</div>
+      </div>
+    </div>
+    <div class="profile-facts">
+      <span>${l.years} лет опыта</span>
+      <span>${l.reviews} отзывов</span>
+      <span>${l.online ? 'Онлайн сейчас' : 'Сейчас офлайн'}</span>
+    </div>
+    <div class="profile-section-label">СПЕЦИАЛИЗАЦИЯ</div>
+    <div class="tag-row">${l.tags.map(t => `<span class="tag">${t}</span>`).join('')}</div>
+    <div class="profile-section-label">ДЕЛА И РЕЗУЛЬТАТЫ · нажмите, чтобы открыть досье</div>
+    <div class="case-list">
+      ${l.cases.map((c, ci) => `
+        <button class="case-preview" onclick="openCaseDetail(${ci})">
+          <div class="cp-top">
+            <span class="cp-title">${c.title}</span>
+            <span class="cp-year">${c.year}</span>
+          </div>
+          <div class="cp-bottom">
+            <span class="lc-verdict lc-verdict-${c.verdictTone}">${c.verdictBadge}</span>
+            <span class="cp-open">Досье дела →</span>
+          </div>
+        </button>
+      `).join('')}
+    </div>
+    <div class="profile-bottom">
+      <div class="price-block"><b>${l.price} ₽</b><span class="unit">/ час</span></div>
+      <div class="rating"><span class="stars">${starDisplay(l.rating)}</span><span class="num">${l.rating}</span></div>
+    </div>
+    <div class="profile-actions" id="profile-actions">${profileActionsHtml(l)}</div>
+  `;
+
+  document.getElementById('lawyer-overlay').classList.add('show');
+}
+
+function refreshProfileActions(){
+  const l = window.currentLawyer;
+  if(!l) return;
+  const el = document.getElementById('profile-actions');
+  if(el) el.innerHTML = profileActionsHtml(l);
+}
+
+function closeLawyerProfile(){
+  document.getElementById('lawyer-overlay').classList.remove('show');
+}
+
+/* ---------- Case dossier ---------- */
+
+function openCaseDetail(caseIdx){
+  const l = window.currentLawyer;
+  if(!l) return;
+  const c = l.cases[caseIdx];
+  if(!c) return;
+
+  document.getElementById('case-modal-content').innerHTML = `
+    <div class="cd-title">${c.title}</div>
+    <div class="cd-lawyer">${l.name} · ${l.specialty} · ${l.city}</div>
+    <div class="cd-facts">
+      <div class="cd-fact"><span class="cd-fact-label">Суд</span><span class="cd-fact-value">${c.court}</span></div>
+      <div class="cd-fact"><span class="cd-fact-label">Номер дела</span><span class="cd-fact-value">${c.caseNumber}</span></div>
+      <div class="cd-fact"><span class="cd-fact-label">Длительность</span><span class="cd-fact-value">${c.duration}</span></div>
+      <div class="cd-fact"><span class="cd-fact-label">Год завершения</span><span class="cd-fact-value">${c.year}</span></div>
+    </div>
+    <div class="profile-section-label">ПОЗИЦИЯ В ДЕЛЕ</div>
+    <div class="cd-side">${c.side}</div>
+    <div class="profile-section-label">ЗАЯВЛЕННЫЕ ТРЕБОВАНИЯ</div>
+    <div class="lc-claims cd-claims">
+      ${c.claimItems.map(ci => `<div class="lc-claim-row"><span>${ci.label}</span><span>${ci.sum}</span></div>`).join('')}
+    </div>
+    <div class="lc-total-row"><span>Заявлено всего</span><span>${c.claimedTotal}</span></div>
+    <div class="profile-section-label">РЕЗУЛЬТАТ</div>
+    <div class="lc-result-row">
+      <span class="lc-verdict lc-verdict-${c.verdictTone}">${c.verdictBadge}</span>
+      <span class="lc-awarded">${c.awardedTotal}</span>
+    </div>
+    <div class="cd-note">${c.note}</div>
+  `;
+
+  document.getElementById('case-overlay').classList.add('show');
+}
+
+function closeCaseDetail(){
+  document.getElementById('case-overlay').classList.remove('show');
+}
+
+/* ---------- Chat (step 1 — lives entirely on the site) ---------- */
+
+window.chatThreads = {};
+
+const LAWYER_AUTO_REPLIES = [
+  "Добрый день! Опишите, пожалуйста, подробнее вашу ситуацию.",
+  "Спасибо за обращение, изучаю детали — отвечу в течение часа.",
+  "Здравствуйте! Уточните, пожалуйста, когда произошла ситуация?",
+  "Принято, подготовлю предварительную консультацию по вашему вопросу.",
+  "Хорошо, пришлите, пожалуйста, документы по делу, если они есть.",
+  "Понял вас. Подскажите, обращались ли вы уже куда-то по этому поводу?",
+  "Спасибо, я на связи — продолжайте, пожалуйста."
+];
+
+function findLawyerByName(name){
+  return lawyers.find(l => l.name === name);
+}
+
+function nowTimeStr(){
+  const d = new Date();
+  return d.getHours().toString().padStart(2,'0') + ':' + d.getMinutes().toString().padStart(2,'0');
+}
+
+// Security: any user-entered text (chat messages, names, etc.) must pass through this
+// before being inserted via innerHTML, to prevent DOM-based XSS. Never interpolate raw
+// user input into innerHTML or into inline event-handler attributes without escaping it.
+function escapeHtml(str){
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+
+function openChat(name){
+  window.currentChatLawyer = name;
+  const l = findLawyerByName(name);
+  if(!window.chatThreads[name]) window.chatThreads[name] = [];
+
+  if(isLawyerUser()){
+    document.getElementById('chat-avatar').textContent = '👤';
+    document.getElementById('chat-lawyer-name').textContent = 'Клиент';
+    document.getElementById('chat-lawyer-status').textContent = 'Обращение через ЮрМаркет';
+  } else {
+    document.getElementById('chat-avatar').textContent = l ? l.avatar : '🧑‍💼';
+    document.getElementById('chat-lawyer-name').textContent = name;
+    document.getElementById('chat-lawyer-status').textContent = l && l.online ? 'Онлайн' : 'Обычно отвечает в течение часа';
+  }
+
+  renderChatMessages();
+  document.getElementById('chat-overlay').classList.add('show');
+  setTimeout(() => document.getElementById('chat-input').focus(), 50);
+}
+
+function closeChat(){
+  document.getElementById('chat-overlay').classList.remove('show');
+}
+
+function renderChatMessages(){
+  const name = window.currentChatLawyer;
+  const thread = window.chatThreads[name] || [];
+  const box = document.getElementById('chat-messages');
+  const lawyerView = isLawyerUser();
+
+  if(thread.length === 0){
+    box.innerHTML = `<div class="chat-empty">${lawyerView ? 'Клиент пока не писал' : 'Напишите юристу — обычно отвечает быстро'}</div>`;
+    return;
+  }
+
+  box.innerHTML = thread.map(m => {
+    const mine = lawyerView ? (m.from === 'lawyer') : (m.from === 'me');
+    return `
+      <div class="chat-msg ${mine ? 'me' : 'lawyer'}">
+        ${escapeHtml(m.text)}
+        <span class="chat-msg-time">${m.time}</span>
+      </div>
+    `;
+  }).join('');
+  box.scrollTop = box.scrollHeight;
+}
+
+function sendChatMessage(){ showToast("Подключаем сервис…"); }
+
+document.getElementById('chat-input').addEventListener('keydown', function(e){
+  if(e.key === 'Enter') sendChatMessage();
+});
+
+/* ---------- Case intake (step 2 — after first message) ---------- */
+
+const CASE_TYPES_PERSON = [
+  "Семейные споры (развод, раздел имущества, алименты)",
+  "Наследственные споры",
+  "Трудовые споры (увольнение, невыплата зарплаты)",
+  "Защита прав потребителей",
+  "Жилищные и имущественные споры",
+  "Взыскание долга по расписке / займу",
+  "ДТП и возмещение ущерба",
+  "Уголовное дело (защита или потерпевший)",
+  "Банкротство физического лица",
+  "Обжалование штрафа / административное дело",
+  "Другое"
+];
+
+const CASE_TYPES_COMPANY = [
+  "Взыскание задолженности по договору",
+  "Корпоративный спор (между участниками/акционерами)",
+  "Банкротство организации",
+  "Налоговый спор",
+  "Договорный спор (поставка, подряд, аренда)",
+  "Трудовой спор с работником",
+  "Защита интеллектуальной собственности",
+  "Административный спор (проверки, лицензирование)",
+  "Другое"
+];
+
+function setIntakePersonType(type){
+  window.intakePersonType = type;
+  document.getElementById('intake-toggle-person').classList.toggle('active', type === 'person');
+  document.getElementById('intake-toggle-company').classList.toggle('active', type === 'company');
+  document.getElementById('intake-name-label').textContent = type === 'person' ? 'ФИО' : 'Название организации';
+  document.getElementById('intake-name').placeholder = type === 'person' ? 'Иван Петров' : 'ООО «Компания»';
+  document.getElementById('intake-address-block').style.display = type === 'person' ? 'block' : 'none';
+
+  const options = type === 'person' ? CASE_TYPES_PERSON : CASE_TYPES_COMPANY;
+  document.getElementById('intake-case-type').innerHTML = options.map(o => `<option>${o}</option>`).join('');
+}
+
+function openCaseIntakeForm(name){
+  window.contactTargetLawyer = name;
+  document.getElementById('intake-lawyer-name').textContent = name;
+  document.getElementById('intake-name').value = '';
+  document.getElementById('intake-defendant-address').value = '';
+  document.getElementById('intake-description').value = '';
+  document.getElementById('intake-error').textContent = '';
+  setIntakePersonType('person');
+  document.getElementById('intake-overlay').classList.add('show');
+}
+
+function closeCaseIntakeForm(){
+  document.getElementById('intake-overlay').classList.remove('show');
+}
+
+function submitCaseIntakeForm(){ showToast("Подключаем сервис…"); }
+
+function showToast(text){
+  const t = document.getElementById('toast');
+  t.textContent = text;
+  t.classList.add('show');
+  clearTimeout(window._toastTimer);
+  window._toastTimer = setTimeout(() => t.classList.remove('show'), 3200);
+}
+
+/* ---------- News (illustrative sample headlines, not a live feed) ---------- */
+
+const WORLD_NEWS = [
+  {icon:"🇪🇺", org:"ЕСПЧ", date:"2 дня назад", title:"подтвердил право на компенсацию за необоснованно долгое судебное разбирательство",
+   body:"Европейский суд по правам человека встал на сторону заявителя, чьё дело рассматривалось в национальном суде свыше семи лет без уважительных причин — присуждена компенсация за нарушение разумных сроков судопроизводства.", hasVideo:true},
+  {icon:"🏛️", org:"МУС", date:"4 дня назад", title:"рассмотрит новое дело о военных преступлениях",
+   body:"Международный уголовный суд принял к производству новое дело — прокуратура представит доказательства на предварительном слушании в ближайшие недели.", hasVideo:true},
+  {icon:"🇺🇸", org:"Верховный суд США", date:"неделю назад", title:"расширил толкование норм о защите персональных данных",
+   body:"Решение уточняет, какие категории данных подпадают под повышенную защиту при их обработке технологическими компаниями.", hasVideo:false},
+  {icon:"🌐", org:"ВОИС", date:"неделю назад", title:"зафиксировала рост споров об авторских правах на ИИ-контент",
+   body:"Всемирная организация интеллектуальной собственности отмечает резкий рост числа споров о правах на контент, созданный с использованием нейросетей, за последний год.", hasVideo:false}
+];
+
+const RU_NEWS = [
+  {icon:"⚖️", org:"Верховный суд РФ", date:"1 день назад", title:"разъяснил порядок взыскания неустойки с застройщиков",
+   body:"Пленум уточнил, как суды должны оценивать соразмерность неустойки при просрочке передачи квартиры по договору долевого участия.", hasVideo:true},
+  {icon:"🏛️", org:"Госдума", date:"3 дня назад", title:"приняла поправки, упрощающие процедуру банкротства физлиц",
+   body:"Поправки сокращают сроки внесудебного банкротства для граждан с небольшими суммами долга и расширяют круг лиц, которые могут им воспользоваться.", hasVideo:false},
+  {icon:"📋", org:"ФНС", date:"5 дней назад", title:"обновила правила налогового вычета при покупке жилья",
+   body:"Служба разъяснила, как учитывать расходы на отделку при расчёте имущественного вычета для квартир, приобретённых без отделки.", hasVideo:false},
+  {icon:"📜", org:"Минюст", date:"неделю назад", title:"предложил расширить перечень оснований для бесплатной юридической помощи",
+   body:"Инициатива расширяет категории граждан, которые могут получить бесплатную юридическую консультацию по семейным и жилищным спорам.", hasVideo:false}
+];
+
+function tickerItemHtml(n, tag, idx){
+  return `
+    <span class="ticker-item" onclick="openArticlePage('${tag}', ${idx})">
+      <span class="ticker-tag ${tag}">${tag === 'world' ? 'МИР' : 'РФ'}</span>
+      <span class="ticker-icon">${n.icon}</span>
+      <span class="ticker-text"><b>${n.org}</b> ${n.title}</span>
+      <span class="ticker-sep">•</span>
+    </span>
+  `;
+}
+
+function renderNews(){
+  const track = document.getElementById('news-ticker-track');
+  if(!track) return;
+  const sequence = [
+    ...WORLD_NEWS.map((n, i) => tickerItemHtml(n, 'world', i)),
+    ...RU_NEWS.map((n, i) => tickerItemHtml(n, 'ru', i))
+  ].join('');
+  // Duplicated once so the -50% translateX loop is seamless
+  track.innerHTML = sequence + sequence;
+}
+
+function renderNewsPage(){
+  const box = document.getElementById('news-page-list');
+  if(!box) return;
+  const all = [
+    ...WORLD_NEWS.map((n, i) => ({...n, tag:'world', idx:i})),
+    ...RU_NEWS.map((n, i) => ({...n, tag:'ru', idx:i}))
+  ];
+  box.innerHTML = all.map(n => `
+    <div class="article-row" onclick="openArticlePage('${n.tag}', ${n.idx})">
+      <div class="article-row-top">
+        <span class="article-row-org">${n.icon} ${n.org}</span>
+        <span class="article-row-date">${n.date}</span>
+      </div>
+      <div class="article-row-title">${n.title}</div>
+    </div>
+  `).join('');
+}
+
+/* ---------- Video / podcasts (illustrative placeholders, not real streams) ---------- */
+
+const VIDEO_ITEMS = [
+  {icon:"🎥", org:"Прямой эфир", headline:"Заседание по делу о взыскании неустойки с застройщика",
+   body:"Трансляция открытого судебного заседания по одному из дел на платформе — показываем реальный ход процесса от первого лица.", hasVideo:true, likes:"2.4K", recommended:false},
+  {icon:"🎙️", org:"Подкаст", headline:"Как делится бизнес при разводе супругов",
+   body:"Юристы ЮрМаркет разбирают на примерах, как суд делит совместный бизнес и как защитить свою долю.", hasVideo:true, likes:"5.1K", recommended:true},
+  {icon:"🎤", org:"Выступление", headline:"Банкротство физлица: пошаговый разбор",
+   body:"Запись открытой лекции о том, как проходит процедура личного банкротства — от подачи заявления до списания долгов.", hasVideo:true, likes:"3.7K", recommended:false},
+  {icon:"🎥", org:"Прямой эфир", headline:"Апелляция по резонансному делу о мошенничестве",
+   body:"Трансляция заседания апелляционной инстанции — следите за ходом пересмотра приговора в реальном времени.", hasVideo:true, likes:"8.9K", recommended:true}
+];
+
+function videoCardHtml(v, idx){
+  return `
+    <div class="video-card" onclick="openArticlePage('video', ${idx})">
+      <div class="video-card-thumb">${v.icon}</div>
+      <div class="video-card-body">
+        <div class="video-card-type">${v.org}</div>
+        <div class="video-card-title">${v.headline}</div>
+      </div>
+    </div>
+  `;
+}
+
+function renderVideoPage(){
+  const box = document.getElementById('video-page-grid');
+  if(!box) return;
+  box.innerHTML = VIDEO_ITEMS.map((v, i) => videoCardHtml(v, i)).join('');
+}
+
+/* ---------- Homepage reel widget (TikTok/Reels-style auto-advancing preview) ---------- */
+
+window.reelIndex = 0;
+window.reelTimer = null;
+
+function renderReelDots(){
+  const box = document.getElementById('reel-dots');
+  if(!box) return;
+  box.innerHTML = VIDEO_ITEMS.map(() => `<span class="reel-dot"></span>`).join('');
+}
+
+function renderReel(){
+  const item = VIDEO_ITEMS[window.reelIndex];
+  if(!item) return;
+  document.getElementById('reel-thumb').textContent = item.icon;
+  document.getElementById('reel-tag').textContent = item.org;
+  document.getElementById('reel-title').textContent = item.headline;
+  document.getElementById('reel-likes').textContent = '❤️ ' + item.likes;
+  document.getElementById('reel-rec').textContent = item.recommended ? '✨ Рекомендовано для вас' : '';
+  document.querySelectorAll('.reel-dot').forEach((d, i) => d.classList.toggle('active', i === window.reelIndex));
+}
+
+function reelStep(dir){
+  window.reelIndex = (window.reelIndex + dir + VIDEO_ITEMS.length) % VIDEO_ITEMS.length;
+  renderReel();
+  resetReelTimer();
+}
+
+function resetReelTimer(){
+  clearInterval(window.reelTimer);
+  window.reelTimer = setInterval(() => reelStep(1), 4500);
+}
+
+function startReel(){
+  renderReelDots();
+  renderReel();
+  resetReelTimer();
+}
+
+/* ---------- Header quote ticker ---------- */
+
+const LEGAL_QUOTES = [
+  "Dura lex, sed lex — закон суров, но он закон",
+  "Audiatur et altera pars — да будет выслушана другая сторона",
+  "Ignorantia juris non excusat — незнание закона не освобождает от ответственности",
+  "Pacta sunt servanda — договоры должны соблюдаться",
+  "In dubio pro reo — сомнение трактуется в пользу обвиняемого",
+  "Fiat justitia — пусть свершится правосудие",
+  "Nemo judex in causa sua — никто не судья в своём деле",
+  "Jura novit curia — суд знает законы",
+  "Lex specialis derogat generali — специальный закон отменяет общий",
+  "Ubi jus, ibi remedium — где есть право, там есть и средство защиты",
+  "Res judicata pro veritate accipitur — решённое дело принимается за истину",
+  "Actori incumbit probatio — бремя доказывания лежит на истце",
+  "Nulla poena sine lege — нет наказания без закона",
+  "Testis unus, testis nullus — один свидетель — не свидетель"
+];
+
+function startHeaderQuotes(){
+  const el = document.getElementById('header-quote');
+  if(!el) return;
+  let i = 0;
+  el.textContent = LEGAL_QUOTES[0];
+  requestAnimationFrame(() => el.classList.add('show'));
+
+  setInterval(() => {
+    el.classList.remove('show');
+    setTimeout(() => {
+      i = (i + 1) % LEGAL_QUOTES.length;
+      el.textContent = LEGAL_QUOTES[i];
+      el.classList.add('show');
+    }, 450);
+  }, 5500);
+}
+
+renderTags();
+renderLawyers();
+renderMyCases();
+renderNews();
+renderNewsPage();
+renderVideoPage();
+startReel();
+populateSettingsCities('Россия');
+startHeaderQuotes();
+
+</script>
+
+<script src="./app.js"></script>
+</body>
+</html>
