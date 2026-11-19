@@ -17,7 +17,13 @@
   function listProfiles(){
     const q=($('f-query')?.value||'').trim().toLowerCase();
     let list=all();
-    if(q)list=list.filter(p=>[p.name,p.specialty,p.city,...p.tags].join(' ').toLowerCase().includes(q));
+    if(q){const inferred=findSpecialtyByKeywords(q);list=list.filter(p=>[p.name,p.specialty,p.city,...p.tags].join(' ').toLowerCase().includes(q)||(inferred&&p.specialty===inferred));}
+    const practice=$('f-practice').value,city=$('f-city').value,audience=$('f-audience').value,price=$('f-price').selectedIndex;
+    if(practice)list=list.filter(p=>p.specialty===practice);
+    if(city)list=list.filter(p=>p.city===city);
+    if(audience==='Бизнес')list=list.filter(p=>['Корпоративное право','Банкротство','Недвижимость'].includes(p.specialty));
+    if(audience==='Физлица')list=list.filter(p=>p.specialty!=='Корпоративное право');
+    if(price)list=list.filter(p=>{const n=Number(p.price.replace(/\D/g,''));return price===1?n<=3000:price===2?n>=3000&&n<=5000:n>=5000;});
     return list;
   }
   async function reloadProfiles(){real=(await api('profiles')).profiles;runSearch();}
@@ -140,11 +146,7 @@
   const hero=document.querySelector('.hero h1');if(hero)hero.innerHTML='Правовая помощь.<br><em>С понятным выбором.</em>';
   const lede=document.querySelector('.hero .lede');if(lede)lede.textContent='Изучите специализацию и опыт юриста, задайте вопрос и обсудите условия до начала работы.';
   // Preserve zero-result searches rather than silently showing every specialist.
-  document.querySelectorAll('.filter-row select').forEach(s=>s.onchange=()=>{
-    let list=listProfiles();
-    for(const f of document.querySelectorAll('.filter-row select')){const v=f.value;if(f.selectedIndex===0)continue;if(f.id.includes('city'))list=list.filter(p=>p.city===v);else if(f.id.includes('special'))list=list.filter(p=>p.specialty===v);else if(f.id.includes('price')){const n=Number(String(v).replace(/\D/g,''));list=list.filter(p=>v.includes('До')?Number(p.price.replace(/\D/g,''))<=n:Number(p.price.replace(/\D/g,''))>=n);}}
-    window.filteredLawyers=list;renderLawyers();
-  });
+  document.querySelectorAll('.filter-row select').forEach(s=>s.onchange=()=>{const chip=$(s.id.replace('f-','chip-')+'-text');if(chip)chip.textContent=s.value||s.options[0].textContent;runSearch();});
   document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.modal-overlay.show').forEach(m=>m.classList.remove('show'));});
   for(const overlay of document.querySelectorAll('.modal-overlay'))overlay.addEventListener('keydown',e=>{if(e.key!=='Tab')return;const nodes=[...overlay.querySelectorAll('button,input,select,textarea,a[href]')].filter(n=>!n.disabled&&n.offsetParent!==null);if(!nodes.length)return;const first=nodes[0],last=nodes.at(-1);if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}});
   renderLawyers();
