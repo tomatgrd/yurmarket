@@ -142,7 +142,6 @@
   document.querySelectorAll('.modal-close').forEach(b=>b.setAttribute('aria-label','Закрыть'));
   $('intake-defendant-address').placeholder='Необязательно — без лишних персональных данных';
   document.querySelectorAll('.reels-wrap,.header-quote').forEach(e=>e.hidden=true);
-  const notice=document.createElement('div');notice.className='service-notice';notice.id='service-status';notice.setAttribute('role','status');notice.textContent='Подключаем сервис…';document.querySelector('header').after(notice);
   const hero=document.querySelector('.hero h1');if(hero)hero.innerHTML='Правовая помощь.<br><em>С понятным выбором.</em>';
   const lede=document.querySelector('.hero .lede');if(lede)lede.textContent='Изучите специализацию и опыт юриста, задайте вопрос и обсудите условия до начала работы.';
   // Preserve zero-result searches rather than silently showing every specialist.
@@ -150,6 +149,18 @@
   document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.modal-overlay.show').forEach(m=>m.classList.remove('show'));});
   for(const overlay of document.querySelectorAll('.modal-overlay'))overlay.addEventListener('keydown',e=>{if(e.key!=='Tab')return;const nodes=[...overlay.querySelectorAll('button,input,select,textarea,a[href]')].filter(n=>!n.disabled&&n.offsetParent!==null);if(!nodes.length)return;const first=nodes[0],last=nodes.at(-1);if(e.shiftKey&&document.activeElement===first){e.preventDefault();last.focus();}else if(!e.shiftKey&&document.activeElement===last){e.preventDefault();first.focus();}});
   renderLawyers();
-  (async()=>{try{await api('health');available=true;await reloadProfiles();$('service-status').textContent='Анкеты специалистов и личная переписка · демонстрационные примеры отмечены';try{const me=await api('me');ownProfile=me.profile;syncUser(me.user);await refreshPrivate();}catch(e){if(!e.message.includes('Войдите')&&!e.message.includes('Сеанс'))throw e;}}catch(e){$('service-status').classList.add('offline');$('service-status').textContent='Сервер недоступен. Доступен просмотр примеров; регистрация и отправка не работают.';}})();
+  (async()=>{
+    try{
+      await api('health');
+      available=true;
+      await reloadProfiles();
+      const me=await api('me');
+      ownProfile=me.profile;
+      syncUser(me.user);
+      await refreshPrivate();
+    }catch{
+      // The demo catalog and news remain available when the API cannot be reached.
+    }
+  })();
   setInterval(()=>{if(available&&window.currentUser&&!document.hidden)refreshPrivate().catch(()=>{});},15000);
 })();
