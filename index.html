@@ -287,7 +287,7 @@
   .ticker-tag.world{background:var(--line); color:var(--brass-dark);}
   .ticker-tag.ru{background:var(--brass-dark); color:#fff;}
   .ticker-icon{font-size:14px; flex-shrink:0;}
-  .ticker-text{font-size:13.5px; color:var(--ink); white-space:nowrap;}
+  .ticker-text{font-size:16px; line-height:1.25; color:var(--ink); white-space:nowrap;}
   .ticker-text b{color:var(--brass-dark); font-weight:700;}
   .ticker-sep{color:var(--slate-light);}
 
@@ -298,7 +298,7 @@
 
   @media (max-width: 720px){
     .ticker-item{padding:0 18px; gap:8px;}
-    .ticker-text{font-size:13px;}
+    .ticker-text{font-size:15px;}
   }
 
   /* ---------- Video / podcasts section ---------- */
@@ -886,7 +886,7 @@
   }
 
 </style>
-<link rel="stylesheet" href="./theme.css?v=20261120-9">
+<link rel="stylesheet" href="./theme.css?v=20261120-10">
 </head>
 <body>
 <!-- ISC License
@@ -945,8 +945,6 @@ SOFTWARE. -->
   <symbol id="lucide-search" viewBox="0 0 24 24"><path d="m21 21-4.34-4.34" /><circle cx="11" cy="11" r="8" /></symbol>
   <symbol id="lucide-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></symbol>
   <symbol id="lucide-arrow-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7" /><path d="M19 12H5" /></symbol>
-  <symbol id="lucide-pause" viewBox="0 0 24 24"><rect x="14" y="3" width="5" height="18" rx="1" /><rect x="5" y="3" width="5" height="18" rx="1" /></symbol>
-  <symbol id="lucide-play" viewBox="0 0 24 24"><path d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z" /></symbol>
   <symbol id="lucide-x" viewBox="0 0 24 24"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></symbol>
   <symbol id="lucide-newspaper" viewBox="0 0 24 24"><path d="M15 18h-5" /><path d="M18 14h-8" /><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-4 0v-9a2 2 0 0 1 2-2h2" /><rect width="8" height="4" x="10" y="6" rx="1" /></symbol>
 </svg>
@@ -957,18 +955,6 @@ SOFTWARE. -->
       <div class="logo-icon"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="#lucide-scale"></use></svg></div>
       <div class="logo-text">Юр<span class="accent">Маркет</span><span class="tm-mark">™</span></div>
     </button>
-    <div class="quote-carousel" id="legal-quotes" role="group" aria-label="Юридические изречения">
-      <button type="button" class="quote-control" id="quote-previous" aria-label="Предыдущая фраза" title="Предыдущая фраза" aria-controls="header-quote"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="#lucide-chevron-left"></use></svg></button>
-      <div class="header-quote" id="header-quote">
-        <span class="quote-latin" lang="la">Dura lex, sed lex</span>
-        <span class="quote-translation">закон суров, но он закон</span>
-      </div>
-      <div class="quote-actions">
-        <button type="button" class="quote-control" id="quote-next" aria-label="Следующая фраза" title="Следующая фраза" aria-controls="header-quote"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="#lucide-chevron-right"></use></svg></button>
-        <button type="button" class="quote-control" id="quote-toggle" aria-label="Приостановить смену фраз" title="Приостановить смену фраз" aria-controls="header-quote"><svg class="ui-icon quote-pause" aria-hidden="true" focusable="false"><use href="#lucide-pause"></use></svg><svg class="ui-icon quote-play" aria-hidden="true" focusable="false"><use href="#lucide-play"></use></svg></button>
-      </div>
-      <span class="quote-announcement" role="status"></span>
-    </div>
     <div class="header-actions">
       <button type="button" class="btn btn-outline" onclick="showView('video')" aria-label="Видео" title="Видео"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="#lucide-video"></use></svg><span class="header-action-label">Видео</span></button>
       <button type="button" class="btn btn-outline" onclick="showView('cabinet')" aria-label="Кабинет" title="Кабинет"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="#lucide-user-round"></use></svg><span class="header-action-label">Кабинет</span></button>
@@ -978,7 +964,7 @@ SOFTWARE. -->
 </header>
 
 <div class="news-ticker" id="news-ticker-bar">
-  <button type="button" class="news-ticker-link" onclick="showView('news')"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="#lucide-newspaper"></use></svg>Новости</button>
+  <button type="button" class="news-ticker-link" aria-label="Все новости" title="Все новости" onclick="showView('news')"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="#lucide-newspaper"></use></svg></button>
   <div class="news-ticker-window">
     <div class="news-ticker-track" id="news-ticker-track"></div>
   </div>
@@ -2416,127 +2402,6 @@ function startReel(){
   resetReelTimer();
 }
 
-/* ---------- Header quote ticker ---------- */
-
-const LEGAL_QUOTES = [
-  "Dura lex, sed lex — закон суров, но он закон",
-  "Audiatur et altera pars — да будет выслушана другая сторона",
-  "Ignorantia juris non excusat — незнание закона не освобождает от ответственности",
-  "Pacta sunt servanda — договоры должны соблюдаться",
-  "In dubio pro reo — сомнение трактуется в пользу обвиняемого",
-  "Fiat justitia — пусть свершится правосудие",
-  "Nemo judex in causa sua — никто не судья в своём деле",
-  "Jura novit curia — суд знает законы",
-  "Lex specialis derogat generali — специальный закон отменяет общий",
-  "Ubi jus, ibi remedium — где есть право, там есть и средство защиты",
-  "Res judicata pro veritate accipitur — решённое дело принимается за истину",
-  "Actori incumbit probatio — бремя доказывания лежит на истце",
-  "Nulla poena sine lege — нет наказания без закона",
-  "Testis unus, testis nullus — один свидетель — не свидетель",
-  "Actus non facit reum nisi mens sit rea — деяние само по себе не делает человека виновным без виновного намерения",
-  "Ad impossibilia nemo tenetur — никто не обязан делать невозможное",
-  "Aequitas sequitur legem — справедливость следует закону",
-  "Bona fides praesumitur — добросовестность предполагается",
-  "Cessante ratione legis, cessat ipsa lex — с исчезновением основания закона прекращается и его действие",
-  "Contra factum proprium venire non licet — нельзя действовать вопреки собственному прежнему поведению",
-  "Damnum sine iniuria — ущерб без нарушения права",
-  "De minimis non curat lex — закон не занимается мелочами",
-  "Ei incumbit probatio qui dicit, non qui negat — доказывает тот, кто утверждает, а не тот, кто отрицает",
-  "Error communis facit ius — всеобщее заблуждение может иметь силу права",
-  "Exceptio probat regulam in casibus non exceptis — исключение подтверждает правило для остальных случаев",
-  "Ex dolo malo non oritur actio — из обмана не возникает права на иск",
-  "Falsus in uno, falsus in omnibus — солгавший в одном может быть ненадёжен и в остальном",
-  "Favor contractus — предпочтение сохранению договора",
-  "Fraus omnia corrumpit — обман обесценивает всё, что на нём основано",
-  "Habeas corpus — доставь задержанного в суд",
-  "In claris non fit interpretatio — ясное положение не требует толкования",
-  "In pari delicto potior est conditio possidentis — при равной вине положение владельца сильнее",
-  "In pari materia — по одному и тому же предмету регулирования",
-  "Interest rei publicae ut sit finis litium — в интересах государства, чтобы споры завершались",
-  "Ius est ars boni et aequi — право есть искусство добра и справедливости",
-  "Lex posterior derogat priori — более поздний закон имеет приоритет перед прежним",
-  "Lex prospicit, non respicit — закон смотрит вперёд, а не назад",
-  "Locus regit actum — форма акта определяется правом места его совершения",
-  "Nemo dat quod non habet — никто не может передать то, чего у него нет",
-  "Nemo tenetur se ipsum accusare — никто не обязан свидетельствовать против себя",
-  "Non bis in idem — нельзя дважды преследовать за одно и то же",
-  "Omnia praesumuntur rite esse acta — предполагается, что действия совершены надлежащим образом",
-  "Par in parem non habet imperium — равный над равным власти не имеет",
-  "Prior tempore, potior iure — кто раньше по времени, тот сильнее по праву",
-  "Quod ab initio non valet, in tractu temporis non convalescit — недействительное с самого начала не становится действительным с течением времени",
-  "Quod omnes tangit, ab omnibus approbari debet — то, что касается всех, должно быть одобрено всеми",
-  "Salus populi suprema lex esto — благо народа да будет высшим законом",
-  "Semel heres, semper heres — однажды став наследником, остаёшься им",
-  "Superficies solo cedit — строение следует судьбе земельного участка",
-  "Volenti non fit iniuria — добровольно согласившемуся не причиняется правовая обида"
-];
-
-function startHeaderQuotes(){
-  const carousel = document.getElementById('legal-quotes');
-  const quote = document.getElementById('header-quote');
-  const latin = quote.querySelector('.quote-latin');
-  const translation = quote.querySelector('.quote-translation');
-  const announcement = carousel.querySelector('.quote-announcement');
-  const toggle = document.getElementById('quote-toggle');
-  const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
-  const pointer = window.matchMedia('(hover: hover)');
-  let current = 0;
-  let playing = !motion.matches;
-  let timer;
-  let animation;
-
-  function showQuote(direction, manual = false){
-    current = (current + direction + LEGAL_QUOTES.length) % LEGAL_QUOTES.length;
-    const phrase = LEGAL_QUOTES[current];
-    const separator = phrase.indexOf(' — ');
-    latin.textContent = phrase.slice(0, separator);
-    translation.textContent = phrase.slice(separator + 3);
-    animation?.cancel();
-    if (!motion.matches) {
-      animation = quote.animate(
-        [{opacity: 0, transform: 'translateY(3px)'}, {opacity: 1, transform: 'translateY(0)'}],
-        {duration: 260, easing: 'ease-out'}
-      );
-    }
-    if (manual) announcement.textContent = phrase;
-  }
-
-  function schedule(){
-    clearInterval(timer);
-    if (playing) {
-      timer = setInterval(() => {
-        if (!document.hidden && !(pointer.matches && carousel.matches(':hover'))) showQuote(1);
-      }, 6500);
-    }
-  }
-
-  function updatePlayback(){
-    toggle.dataset.playing = String(playing);
-    const label = playing ? 'Приостановить смену фраз' : 'Запустить смену фраз';
-    toggle.setAttribute('aria-label', label);
-    toggle.title = label;
-    schedule();
-  }
-
-  document.getElementById('quote-previous').addEventListener('click', () => {
-    showQuote(-1, true);
-    schedule();
-  });
-  document.getElementById('quote-next').addEventListener('click', () => {
-    showQuote(1, true);
-    schedule();
-  });
-  toggle.addEventListener('click', () => {
-    playing = !playing;
-    updatePlayback();
-  });
-  motion.addEventListener('change', event => {
-    playing = !event.matches;
-    updatePlayback();
-  });
-  updatePlayback();
-}
-
 renderTags();
 renderLawyers();
 renderMyCases();
@@ -2545,7 +2410,6 @@ renderNewsPage();
 renderVideoPage();
 startReel();
 populateSettingsCities('Россия');
-startHeaderQuotes();
 
 </script>
 
