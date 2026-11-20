@@ -141,7 +141,7 @@
   $('login-error').setAttribute('role','alert');$('register-error').setAttribute('role','alert');$('intake-error').setAttribute('role','alert');$('toast').setAttribute('role','status');
   document.querySelectorAll('.modal-close').forEach(b=>b.setAttribute('aria-label','Закрыть'));
   $('intake-defendant-address').placeholder='Необязательно — без лишних персональных данных';
-  document.querySelectorAll('.reels-wrap,.news-ticker,.header-quote').forEach(e=>e.hidden=true);
+  document.querySelectorAll('.reels-wrap,.header-quote').forEach(e=>e.hidden=true);
   const notice=document.createElement('div');notice.className='service-notice';notice.id='service-status';notice.setAttribute('role','status');notice.textContent='Подключаем сервис…';document.querySelector('header').after(notice);
   const hero=document.querySelector('.hero h1');if(hero)hero.innerHTML='Правовая помощь.<br><em>С понятным выбором.</em>';
   const lede=document.querySelector('.hero .lede');if(lede)lede.textContent='Изучите специализацию и опыт юриста, задайте вопрос и обсудите условия до начала работы.';
