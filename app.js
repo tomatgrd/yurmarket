@@ -42,7 +42,7 @@
     renderMyCases();renderCabMessages();if(recipient)renderChatMessages();
   }
   window.runSearch=()=>{window.filteredLawyers=listProfiles();renderLawyers();};
-  window.filterByTag=tag=>{window.filteredLawyers=all().filter(p=>p.specialty===tag||p.tags.includes(tag));renderLawyers();$('results-section').scrollIntoView({behavior:'smooth'});};
+  window.filterByTag=tag=>{window.filteredLawyers=all().filter(p=>p.specialty===tag||p.tags.includes(tag));renderLawyers();$('results-section').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});};
   window.renderLawyers=()=>{
     let list=[...(window.filteredLawyers||all())];
     if($('sort-select').value==='price')list.sort((a,b)=>Number(String(a.price).replace(/\D/g,''))-Number(String(b.price).replace(/\D/g,'')));
@@ -142,8 +142,11 @@
   document.querySelectorAll('.modal-close').forEach(b=>b.setAttribute('aria-label','Закрыть'));
   $('intake-defendant-address').placeholder='Необязательно — без лишних персональных данных';
   document.querySelectorAll('.reels-wrap,.header-quote').forEach(e=>e.hidden=true);
-  const hero=document.querySelector('.hero h1');if(hero)hero.innerHTML='Правовая помощь.<br><em>С понятным выбором.</em>';
-  const lede=document.querySelector('.hero .lede');if(lede)lede.textContent='Изучите специализацию и опыт юриста, задайте вопрос и обсудите условия до начала работы.';
+  $('lawyer-search').addEventListener('submit',event=>{
+    event.preventDefault();
+    runSearch();
+    $('results-section').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});
+  });
   // Preserve zero-result searches rather than silently showing every specialist.
   document.querySelectorAll('.filter-row select').forEach(s=>s.onchange=()=>{const chip=$(s.id.replace('f-','chip-')+'-text');if(chip)chip.textContent=s.value||s.options[0].textContent;runSearch();});
   document.addEventListener('keydown',e=>{if(e.key==='Escape')document.querySelectorAll('.modal-overlay.show').forEach(m=>m.classList.remove('show'));});

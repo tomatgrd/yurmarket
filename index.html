@@ -908,7 +908,7 @@
   }
 
 </style>
-<link rel="stylesheet" href="./theme.css?v=20261120-5">
+<link rel="stylesheet" href="./theme.css?v=20261120-6">
 </head>
 <body>
 
@@ -919,7 +919,6 @@
       <div class="logo-text">Юр<span class="accent">Маркет</span><span class="tm-mark">™</span></div>
     </button>
     <nav class="header-nav">
-      <button class="header-nav-btn" onclick="showView('news')">📰 Новости</button>
       <button class="header-nav-btn" onclick="showView('video')">🎥 Видео</button>
     </nav>
     <div class="header-quote" id="header-quote" aria-hidden="true"></div>
@@ -931,7 +930,10 @@
 </header>
 
 <div class="news-ticker" id="news-ticker-bar">
-  <div class="news-ticker-track" id="news-ticker-track"></div>
+  <button type="button" class="news-ticker-link" onclick="showView('news')">Новости</button>
+  <div class="news-ticker-window">
+    <div class="news-ticker-track" id="news-ticker-track"></div>
+  </div>
 </div>
 
 <!-- ============ LOGIN MODAL ============ -->
@@ -1098,15 +1100,14 @@
     </div>
 
     <section class="hero">
-      <div class="hero-eyebrow"><span class="rule"></span> ЮРМАРКЕТ · ПРАВОВАЯ ПОМОЩЬ <span class="rule"></span></div>
-      <h1>Найдите юриста под<span class="cursive">вашу ситуацию</span></h1>
-      <p class="lede">Опишите проблему своими словами — подберём подходящего специалиста с реальными отзывами</p>
+      <h1>Найдите юриста <em>для вашей ситуации</em></h1>
+      <p class="lede">Сравните специализацию, опыт и стоимость консультации.</p>
 
     <div class="search-wrap">
-      <div class="search-bar">
-        <input id="f-query" type="text" placeholder="Меня обвиняют, контрагент не платит...">
-        <button onclick="runSearch()">Найти юриста →</button>
-      </div>
+      <form class="search-bar" id="lawyer-search" role="search">
+        <input id="f-query" type="search" aria-label="Поиск юриста" placeholder="Например, трудовой спор">
+        <button class="btn btn-primary" type="submit">Найти юриста</button>
+      </form>
       <div class="filter-row">
         <label class="filter-chip">
           <span class="chip-icon">☰</span>
@@ -1168,13 +1169,13 @@
   <section class="section wrap" id="results-section">
     <div class="section-head">
       <h2>Юристы</h2>
-      <select class="sort-select" id="sort-select" onchange="renderLawyers()">
+      <select class="sort-select" id="sort-select" aria-label="Сортировка анкет" onchange="renderLawyers()">
         <option value="rating">По рейтингу</option>
         <option value="reviews">По числу отзывов</option>
         <option value="price">По стоимости</option>
       </select>
     </div>
-    <div class="results-count" id="results-count" style="margin-bottom:16px;"><b>36</b> юристов найдено</div>
+    <div class="results-count" id="results-count" role="status" style="margin-bottom:16px;"><b>36</b> юристов найдено</div>
     <div class="lawyer-list" id="lawyer-list"></div>
   </section>
 
@@ -1292,7 +1293,7 @@
 <!-- ============ NEWS VIEW ============ -->
 <div id="view-news" class="view">
   <section class="section wrap">
-    <a class="back-link" onclick="showView('home')">← На главную</a>
+    <button type="button" class="back-link" onclick="showView('home')">На главную</button>
     <div class="section-head"><h2>Новости в мире юриспруденции</h2></div>
     <div class="article-list" id="news-page-list"></div>
   </section>
@@ -1301,7 +1302,7 @@
 <!-- ============ VIDEO VIEW ============ -->
 <div id="view-video" class="view">
   <section class="section wrap">
-    <a class="back-link" onclick="showView('home')">← На главную</a>
+    <button type="button" class="back-link" onclick="showView('home')">На главную</button>
     <div class="section-head"><h2>Прямые эфиры и подкасты</h2></div>
     <div class="video-grid" id="video-page-grid"></div>
   </section>
@@ -1310,7 +1311,7 @@
 <!-- ============ ARTICLE VIEW ============ -->
 <div id="view-article" class="view">
   <section class="section wrap">
-    <a class="back-link" onclick="goBackFromArticle()">← Назад</a>
+    <button type="button" class="back-link" onclick="goBackFromArticle()">К списку</button>
     <div id="article-page-content"></div>
   </section>
 </div>
@@ -2283,13 +2284,13 @@ function renderNewsPage(){
     ...RU_NEWS.map((n, i) => ({...n, tag:'ru', idx:i}))
   ];
   box.innerHTML = all.map(n => `
-    <div class="article-row" onclick="openArticlePage('${n.tag}', ${n.idx})">
-      <div class="article-row-top">
+    <button type="button" class="article-row" onclick="openArticlePage('${n.tag}', ${n.idx})">
+      <span class="article-row-top">
         <span class="article-row-org">${n.icon} ${n.org}</span>
         <span class="article-row-date">${n.date}</span>
-      </div>
-      <div class="article-row-title">${n.title}</div>
-    </div>
+      </span>
+      <span class="article-row-title">${n.title}</span>
+    </button>
   `).join('');
 }
 
@@ -2411,6 +2412,6 @@ startHeaderQuotes();
 
 </script>
 
-<script src="./app.js?v=20261120-4"></script>
+<script src="./app.js?v=20261120-6"></script>
 </body>
 </html>
