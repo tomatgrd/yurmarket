@@ -49,7 +49,7 @@
     else list.sort((a,b)=>b.years-a.years);
     window.currentList=list;
     $('results-count').textContent=list.length?`${list.length} анкет · ${real.length?'данные предоставлены специалистами':'демонстрационные примеры'}`:'По вашему запросу никого не найдено. Измените фильтры.';
-    $('lawyer-list').innerHTML=list.map((p,i)=>`<button type="button" class="lawyer-card" data-profile="${i}"><span class="avatar">${esc(p.name.split(' ').slice(0,2).map(x=>x[0]).join(''))}</span><span class="lawyer-body"><span class="name-row"><span class="lawyer-name">${esc(p.name)}</span><span class="profile-label">${p.demo?'Пример анкеты':'Без проверки документов'}</span></span><span class="lawyer-specialty">${esc(p.specialty)} · ${esc(p.city)}</span><span class="lawyer-facts">${p.years} лет опыта</span><span class="tag-row">${p.tags.map(t=>`<span class="tag">${esc(t)}</span>`).join('')}</span><span class="card-bottom"><span class="price-block"><b>${esc(p.price)} ₽</b><span class="unit"> / час</span></span><span class="profile-open">Открыть анкету</span></span></span></button>`).join('');
+    $('lawyer-list').innerHTML=list.map((p,i)=>`<button type="button" class="lawyer-card" data-profile="${i}"><span class="avatar">${esc(p.name.split(' ').slice(0,2).map(x=>x[0]).join(''))}</span><span class="lawyer-body"><span class="name-row"><span class="lawyer-name">${esc(p.name)}</span><span class="profile-label">${p.demo?'Пример анкеты':'Без проверки документов'}</span></span><span class="lawyer-specialty">${esc(p.specialty)} · ${esc(p.city)}</span><span class="lawyer-facts">${p.years} лет опыта</span><span class="tag-row">${p.tags.map(t=>`<span class="tag">${esc(t)}</span>`).join('')}</span><span class="card-bottom"><span class="price-block"><b>${esc(p.price)} ₽</b><span class="unit"> / час</span></span><span class="profile-open">Открыть анкету<svg class="ui-icon" aria-hidden="true" focusable="false"><use href="#lucide-arrow-right"></use></svg></span></span></span></button>`).join('');
     $('lawyer-list').querySelectorAll('[data-profile]').forEach(b=>b.onclick=()=>openLawyerProfile(Number(b.dataset.profile)));
   };
   window.findLawyerByName=name=>all().find(p=>p.name===name);
@@ -141,7 +141,7 @@
   $('login-error').setAttribute('role','alert');$('register-error').setAttribute('role','alert');$('intake-error').setAttribute('role','alert');$('toast').setAttribute('role','status');
   document.querySelectorAll('.modal-close').forEach(b=>b.setAttribute('aria-label','Закрыть'));
   $('intake-defendant-address').placeholder='Необязательно — без лишних персональных данных';
-  document.querySelectorAll('.reels-wrap,.header-quote').forEach(e=>e.hidden=true);
+  document.querySelectorAll('.reels-wrap').forEach(e=>e.hidden=true);
   $('lawyer-search').addEventListener('submit',event=>{
     event.preventDefault();
     runSearch();

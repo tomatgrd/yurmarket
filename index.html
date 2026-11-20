@@ -105,28 +105,6 @@
     .header-nav{display:none;}
   }
 
-  .header-quote{
-    flex:1;
-    min-width:0;
-    text-align:center;
-    padding:0 28px;
-    font-family:'Tinos', serif;
-    font-style:italic;
-    font-weight:600;
-    font-size:13.5px;
-    color:var(--brass-dark);
-    white-space:nowrap;
-    overflow:hidden;
-    text-overflow:ellipsis;
-    opacity:0;
-    transition:opacity .45s ease;
-  }
-  .header-quote.show{opacity:1;}
-
-  @media (max-width: 860px){
-    .header-quote{display:none;}
-  }
-
   .btn{
     display:inline-flex; align-items:center; gap:6px;
     padding:8px 14px;
@@ -908,29 +886,99 @@
   }
 
 </style>
-<link rel="stylesheet" href="./theme.css?v=20261120-7">
+<link rel="stylesheet" href="./theme.css?v=20261120-8">
 </head>
 <body>
+<!-- ISC License
+
+Copyright (c) 2026 Lucide Icons and Contributors
+
+Permission to use, copy, modify, and/or distribute this software for any
+purpose with or without fee is hereby granted, provided that the above
+copyright notice and this permission notice appear in all copies.
+
+THE SOFTWARE IS PROVIDED "AS IS" AND THE AUTHOR DISCLAIMS ALL WARRANTIES
+WITH REGARD TO THIS SOFTWARE INCLUDING ALL IMPLIED WARRANTIES OF
+MERCHANTABILITY AND FITNESS. IN NO EVENT SHALL THE AUTHOR BE LIABLE FOR
+ANY SPECIAL, DIRECT, INDIRECT, OR CONSEQUENTIAL DAMAGES OR ANY DAMAGES
+WHATSOEVER RESULTING FROM LOSS OF USE, DATA OR PROFITS, WHETHER IN AN
+ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
+OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
+
+---
+
+The following Lucide icons are derived from the Feather project:
+
+airplay, alert-circle, alert-octagon, alert-triangle, aperture, arrow-down-circle, arrow-down-left, arrow-down-right, arrow-down, arrow-left-circle, arrow-left, arrow-right-circle, arrow-right, arrow-up-circle, arrow-up-left, arrow-up-right, arrow-up, at-sign, calendar, cast, check, chevron-down, chevron-left, chevron-right, chevron-up, chevrons-down, chevrons-left, chevrons-right, chevrons-up, circle, clipboard, clock, code, columns, command, compass, corner-down-left, corner-down-right, corner-left-down, corner-left-up, corner-right-down, corner-right-up, corner-up-left, corner-up-right, crosshair, database, divide-circle, divide-square, dollar-sign, download, external-link, feather, frown, hash, headphones, help-circle, info, italic, key, layout, life-buoy, link-2, link, loader, lock, log-in, log-out, maximize, meh, minimize, minimize-2, minus-circle, minus-square, minus, monitor, moon, more-horizontal, more-vertical, move, music, navigation-2, navigation, octagon, pause-circle, percent, plus-circle, plus-square, plus, power, radio, rss, search, server, share, shopping-bag, sidebar, smartphone, smile, square, table-2, tablet, target, terminal, trash-2, trash, triangle, tv, type, upload, x-circle, x-octagon, x-square, x, zoom-in, zoom-out
+
+The MIT License (MIT) (for the icons listed above)
+
+Copyright (c) 2013-present Cole Bemis
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE. -->
+<svg class="icon-sprite" xmlns="http://www.w3.org/2000/svg" width="0" height="0" aria-hidden="true" focusable="false">
+  <symbol id="lucide-chevron-left" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6" /></symbol>
+  <symbol id="lucide-chevron-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6" /></symbol>
+  <symbol id="lucide-chevron-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6" /></symbol>
+  <symbol id="lucide-sliders-horizontal" viewBox="0 0 24 24"><path d="M10 5H3" /><path d="M12 19H3" /><path d="M14 3v4" /><path d="M16 17v4" /><path d="M21 12h-9" /><path d="M21 19h-5" /><path d="M21 5h-7" /><path d="M8 10v4" /><path d="M8 12H3" /></symbol>
+  <symbol id="lucide-map-pin" viewBox="0 0 24 24"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" /><circle cx="12" cy="10" r="3" /></symbol>
+  <symbol id="lucide-user-round" viewBox="0 0 24 24"><circle cx="12" cy="8" r="5" /><path d="M20 21a8 8 0 0 0-16 0" /></symbol>
+  <symbol id="lucide-video" viewBox="0 0 24 24"><path d="m16 13 5.223 3.482a.5.5 0 0 0 .777-.416V7.87a.5.5 0 0 0-.752-.432L16 10.5" /><rect x="2" y="6" width="14" height="12" rx="2" /></symbol>
+  <symbol id="lucide-scale" viewBox="0 0 24 24"><path d="M12 3v18" /><path d="m19 8 3 8a5 5 0 0 1-6 0zV7" /><path d="M3 7h1a17 17 0 0 0 8-2 17 17 0 0 0 8 2h1" /><path d="m5 8 3 8a5 5 0 0 1-6 0zV7" /><path d="M7 21h10" /></symbol>
+  <symbol id="lucide-wallet" viewBox="0 0 24 24"><path d="M19 7V4a1 1 0 0 0-1-1H5a2 2 0 0 0 0 4h15a1 1 0 0 1 1 1v4h-3a2 2 0 0 0 0 4h3a1 1 0 0 0 1-1v-2a1 1 0 0 0-1-1" /><path d="M3 5v14a2 2 0 0 0 2 2h15a1 1 0 0 0 1-1v-4" /></symbol>
+  <symbol id="lucide-search" viewBox="0 0 24 24"><path d="m21 21-4.34-4.34" /><circle cx="11" cy="11" r="8" /></symbol>
+  <symbol id="lucide-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></symbol>
+  <symbol id="lucide-arrow-left" viewBox="0 0 24 24"><path d="m12 19-7-7 7-7" /><path d="M19 12H5" /></symbol>
+  <symbol id="lucide-pause" viewBox="0 0 24 24"><rect x="14" y="3" width="5" height="18" rx="1" /><rect x="5" y="3" width="5" height="18" rx="1" /></symbol>
+  <symbol id="lucide-play" viewBox="0 0 24 24"><path d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 2 0 0 1 .003 3.458l-12 7A2 2 0 0 1 5 19z" /></symbol>
+  <symbol id="lucide-x" viewBox="0 0 24 24"><path d="M18 6 6 18" /><path d="m6 6 12 12" /></symbol>
+  <symbol id="lucide-newspaper" viewBox="0 0 24 24"><path d="M15 18h-5" /><path d="M18 14h-8" /><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-4 0v-9a2 2 0 0 1 2-2h2" /><rect width="8" height="4" x="10" y="6" rx="1" /></symbol>
+</svg>
 
 <header>
   <div class="header-inner">
     <button class="logo-group" onclick="showView('home')">
-      <div class="logo-icon">⚖️</div>
+      <div class="logo-icon"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="#lucide-scale"></use></svg></div>
       <div class="logo-text">Юр<span class="accent">Маркет</span><span class="tm-mark">™</span></div>
     </button>
-    <nav class="header-nav">
-      <button class="header-nav-btn" onclick="showView('video')">🎥 Видео</button>
-    </nav>
-    <div class="header-quote" id="header-quote" aria-hidden="true"></div>
+    <div class="quote-carousel" id="legal-quotes" role="group" aria-label="Юридические изречения">
+      <button type="button" class="quote-control" id="quote-previous" aria-label="Предыдущая фраза" title="Предыдущая фраза" aria-controls="header-quote"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="#lucide-chevron-left"></use></svg></button>
+      <div class="header-quote" id="header-quote">
+        <span class="quote-latin" lang="la">Dura lex, sed lex</span>
+        <span class="quote-translation">закон суров, но он закон</span>
+      </div>
+      <div class="quote-actions">
+        <button type="button" class="quote-control" id="quote-next" aria-label="Следующая фраза" title="Следующая фраза" aria-controls="header-quote"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="#lucide-chevron-right"></use></svg></button>
+        <button type="button" class="quote-control" id="quote-toggle" aria-label="Приостановить смену фраз" title="Приостановить смену фраз" aria-controls="header-quote"><svg class="ui-icon quote-pause" aria-hidden="true" focusable="false"><use href="#lucide-pause"></use></svg><svg class="ui-icon quote-play" aria-hidden="true" focusable="false"><use href="#lucide-play"></use></svg></button>
+      </div>
+      <span class="quote-announcement" role="status"></span>
+    </div>
     <div class="header-actions">
-      <button class="btn btn-outline" onclick="showView('cabinet')"><span class="full-label">Кабинет</span><span class="icon-only">👤</span></button>
+      <button type="button" class="btn btn-outline" onclick="showView('video')" aria-label="Видео" title="Видео"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="#lucide-video"></use></svg><span class="header-action-label">Видео</span></button>
+      <button type="button" class="btn btn-outline" onclick="showView('cabinet')" aria-label="Кабинет" title="Кабинет"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="#lucide-user-round"></use></svg><span class="header-action-label">Кабинет</span></button>
       <button class="btn btn-primary" id="login-btn" onclick="openLogin()">Войти</button>
     </div>
   </div>
 </header>
 
 <div class="news-ticker" id="news-ticker-bar">
-  <button type="button" class="news-ticker-link" onclick="showView('news')">Новости</button>
+  <button type="button" class="news-ticker-link" onclick="showView('news')"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="#lucide-newspaper"></use></svg>Новости</button>
   <div class="news-ticker-window">
     <div class="news-ticker-track" id="news-ticker-track"></div>
   </div>
@@ -941,7 +989,7 @@
   <div class="modal-box">
     <div class="modal-head">
       <h2>Вход в ЮрМаркет</h2>
-      <button class="modal-close" onclick="closeLogin()">✕</button>
+      <button class="modal-close" onclick="closeLogin()"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="#lucide-x"></use></svg></button>
     </div>
     <div class="modal-body">
       <label class="field-label">Логин</label>
@@ -960,7 +1008,7 @@
   <div class="modal-box">
     <div class="modal-head">
       <h2>Регистрация</h2>
-      <button class="modal-close" onclick="closeRegister()">✕</button>
+      <button class="modal-close" onclick="closeRegister()"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="#lucide-x"></use></svg></button>
     </div>
     <div class="modal-body">
       <label class="field-label">Вы регистрируетесь как</label>
@@ -986,7 +1034,7 @@
   <div class="modal-box lawyer-modal-box">
     <div class="modal-head">
       <h2>Анкета юриста</h2>
-      <button class="modal-close" onclick="closeLawyerProfile()">✕</button>
+      <button class="modal-close" onclick="closeLawyerProfile()"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="#lucide-x"></use></svg></button>
     </div>
     <div class="modal-body" id="lawyer-modal-content"></div>
   </div>
@@ -997,7 +1045,7 @@
   <div class="modal-box case-modal-box">
     <div class="modal-head">
       <button class="modal-back" onclick="closeCaseDetail()">← К анкете юриста</button>
-      <button class="modal-close" onclick="closeCaseDetail()">✕</button>
+      <button class="modal-close" onclick="closeCaseDetail()"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="#lucide-x"></use></svg></button>
     </div>
     <div class="modal-body" id="case-modal-content"></div>
   </div>
@@ -1012,7 +1060,7 @@
         <div class="chat-head-name" id="chat-lawyer-name"></div>
         <div class="chat-head-status" id="chat-lawyer-status"></div>
       </div>
-      <button class="modal-close" onclick="closeChat()">✕</button>
+      <button class="modal-close" onclick="closeChat()"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="#lucide-x"></use></svg></button>
     </div>
     <div class="chat-messages" id="chat-messages"></div>
     <div class="chat-input-row">
@@ -1027,7 +1075,7 @@
   <div class="modal-box">
     <div class="modal-head">
       <h2>Доверить дело юристу</h2>
-      <button class="modal-close" onclick="closeCaseIntakeForm()">✕</button>
+      <button class="modal-close" onclick="closeCaseIntakeForm()"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="#lucide-x"></use></svg></button>
     </div>
     <div class="modal-body">
       <div class="contact-lawyer-line">Юрист: <b id="intake-lawyer-name"></b></div>
@@ -1064,7 +1112,7 @@
   <div class="modal-box">
     <div class="modal-head">
       <h2>Статус дела</h2>
-      <button class="modal-close" onclick="closeCaseStatus()">✕</button>
+      <button class="modal-close" onclick="closeCaseStatus()"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="#lucide-x"></use></svg></button>
     </div>
     <div class="modal-body" id="case-status-content"></div>
   </div>
@@ -1091,8 +1139,8 @@
               <span class="reel-rec" id="reel-rec"></span>
             </div>
           </div>
-          <button class="reel-nav reel-prev" onclick="event.stopPropagation(); reelStep(-1)">‹</button>
-          <button class="reel-nav reel-next" onclick="event.stopPropagation(); reelStep(1)">›</button>
+          <button class="reel-nav reel-prev" onclick="event.stopPropagation(); reelStep(-1)" aria-label="Предыдущее видео"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="#lucide-chevron-left"></use></svg></button>
+          <button class="reel-nav reel-next" onclick="event.stopPropagation(); reelStep(1)" aria-label="Следующее видео"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="#lucide-chevron-right"></use></svg></button>
         </div>
         <div class="reel-dots" id="reel-dots"></div>
       </div>
@@ -1106,12 +1154,13 @@
     <div class="search-wrap">
       <form class="search-bar" id="lawyer-search" role="search">
         <input id="f-query" type="search" aria-label="Поиск юриста" placeholder="Например, трудовой спор">
-        <button class="btn btn-primary" type="submit">Найти юриста</button>
+        <button class="btn btn-primary" type="submit"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="#lucide-search"></use></svg>Найти юриста</button>
       </form>
       <div class="filter-row">
         <label class="filter-chip">
-          <span class="chip-icon">☰</span>
+          <svg class="ui-icon chip-icon" aria-hidden="true" focusable="false"><use href="#lucide-sliders-horizontal"></use></svg>
           <span class="chip-text" id="chip-practice-text">Специализация</span>
+          <svg class="ui-icon chip-caret" aria-hidden="true" focusable="false"><use href="#lucide-chevron-down"></use></svg>
           <select id="f-practice" onchange="updateChipText('f-practice','chip-practice-text','Специализация')">
             <option value="">Специализация</option>
             <option>Семейное право</option>
@@ -1123,8 +1172,9 @@
           </select>
         </label>
         <label class="filter-chip">
-          <span class="chip-icon">📍</span>
+          <svg class="ui-icon chip-icon" aria-hidden="true" focusable="false"><use href="#lucide-map-pin"></use></svg>
           <span class="chip-text" id="chip-city-text">Город</span>
+          <svg class="ui-icon chip-caret" aria-hidden="true" focusable="false"><use href="#lucide-chevron-down"></use></svg>
           <select id="f-city" onchange="updateChipText('f-city','chip-city-text','Город')">
             <option value="">Город</option>
             <option>Москва</option><option>Санкт-Петербург</option><option>Новосибирск</option>
@@ -1135,8 +1185,9 @@
           </select>
         </label>
         <label class="filter-chip">
-          <span class="chip-icon">👤</span>
+          <svg class="ui-icon chip-icon" aria-hidden="true" focusable="false"><use href="#lucide-user-round"></use></svg>
           <span class="chip-text" id="chip-audience-text">Физлица / Бизнес</span>
+          <svg class="ui-icon chip-caret" aria-hidden="true" focusable="false"><use href="#lucide-chevron-down"></use></svg>
           <select id="f-audience" onchange="updateChipText('f-audience','chip-audience-text','Физлица / Бизнес')">
             <option value="">Физлица / Бизнес</option>
             <option>Физлица</option>
@@ -1144,8 +1195,9 @@
           </select>
         </label>
         <label class="filter-chip">
-          <span class="chip-icon">💰</span>
+          <svg class="ui-icon chip-icon" aria-hidden="true" focusable="false"><use href="#lucide-wallet"></use></svg>
           <span class="chip-text" id="chip-price-text">Цена</span>
+          <svg class="ui-icon chip-caret" aria-hidden="true" focusable="false"><use href="#lucide-chevron-down"></use></svg>
           <select id="f-price" onchange="updateChipText('f-price','chip-price-text','Цена')">
             <option value="">Цена</option>
             <option>До 3 000 ₽/час</option>
@@ -1293,7 +1345,7 @@
 <!-- ============ NEWS VIEW ============ -->
 <div id="view-news" class="view">
   <section class="section wrap">
-    <button type="button" class="back-link" onclick="showView('home')">На главную</button>
+    <button type="button" class="back-link" onclick="showView('home')"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="#lucide-arrow-left"></use></svg>На главную</button>
     <div class="section-head"><h2>Новости в мире юриспруденции</h2></div>
     <div class="article-list" id="news-page-list"></div>
   </section>
@@ -1302,7 +1354,7 @@
 <!-- ============ VIDEO VIEW ============ -->
 <div id="view-video" class="view">
   <section class="section wrap">
-    <button type="button" class="back-link" onclick="showView('home')">На главную</button>
+    <button type="button" class="back-link" onclick="showView('home')"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="#lucide-arrow-left"></use></svg>На главную</button>
     <div class="section-head"><h2>Прямые эфиры и подкасты</h2></div>
     <div class="video-grid" id="video-page-grid"></div>
   </section>
@@ -1311,7 +1363,7 @@
 <!-- ============ ARTICLE VIEW ============ -->
 <div id="view-article" class="view">
   <section class="section wrap">
-    <button type="button" class="back-link" onclick="goBackFromArticle()">К списку</button>
+    <button type="button" class="back-link" onclick="goBackFromArticle()"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="#lucide-arrow-left"></use></svg>К списку</button>
     <div id="article-page-content"></div>
   </section>
 </div>
@@ -1320,7 +1372,6 @@
   <div class="wrap footer-inner">
     <span>© 2026 ЮрМаркет. Кочуров В. А. Все права защищены.</span>
     <span>Юридические услуги по всей России</span>
-    <button type="button" class="footer-video" onclick="showView('video')">Видео и подкасты</button>
   </div>
   <div class="wrap footer-legal">
     «ЮрМаркет»™ — название, логотип и фирменный стиль являются объектами интеллектуальной собственности правообладателя (Кочуров В. А.). Копирование, воспроизведение и использование без письменного разрешения запрещены.
@@ -1652,7 +1703,7 @@ function openArticlePage(tag, idx){
   document.getElementById('article-page-content').innerHTML = `
     <div class="contact-lawyer-line">${item.icon} <b>${item.org}</b>${item.date ? ' · ' + item.date : ''}</div>
     <h2 class="article-page-title">${headline}</h2>
-    ${item.hasVideo ? `<div class="video-placeholder"><span class="video-placeholder-icon">🎥</span><span>Видео</span></div>` : ''}
+    ${item.hasVideo ? `<div class="video-placeholder"><span class="video-placeholder-icon"><svg class="ui-icon" aria-hidden="true" focusable="false"><use href="#lucide-video"></use></svg></span><span>Видео</span></div>` : ''}
     <p class="article-page-body">${item.body}</p>
   `;
   showView('article');
@@ -2381,24 +2432,109 @@ const LEGAL_QUOTES = [
   "Res judicata pro veritate accipitur — решённое дело принимается за истину",
   "Actori incumbit probatio — бремя доказывания лежит на истце",
   "Nulla poena sine lege — нет наказания без закона",
-  "Testis unus, testis nullus — один свидетель — не свидетель"
+  "Testis unus, testis nullus — один свидетель — не свидетель",
+  "Actus non facit reum nisi mens sit rea — деяние само по себе не делает человека виновным без виновного намерения",
+  "Ad impossibilia nemo tenetur — никто не обязан делать невозможное",
+  "Aequitas sequitur legem — справедливость следует закону",
+  "Bona fides praesumitur — добросовестность предполагается",
+  "Cessante ratione legis, cessat ipsa lex — с исчезновением основания закона прекращается и его действие",
+  "Contra factum proprium venire non licet — нельзя действовать вопреки собственному прежнему поведению",
+  "Damnum sine iniuria — ущерб без нарушения права",
+  "De minimis non curat lex — закон не занимается мелочами",
+  "Ei incumbit probatio qui dicit, non qui negat — доказывает тот, кто утверждает, а не тот, кто отрицает",
+  "Error communis facit ius — всеобщее заблуждение может иметь силу права",
+  "Exceptio probat regulam in casibus non exceptis — исключение подтверждает правило для остальных случаев",
+  "Ex dolo malo non oritur actio — из обмана не возникает права на иск",
+  "Falsus in uno, falsus in omnibus — солгавший в одном может быть ненадёжен и в остальном",
+  "Favor contractus — предпочтение сохранению договора",
+  "Fraus omnia corrumpit — обман обесценивает всё, что на нём основано",
+  "Habeas corpus — доставь задержанного в суд",
+  "In claris non fit interpretatio — ясное положение не требует толкования",
+  "In pari delicto potior est conditio possidentis — при равной вине положение владельца сильнее",
+  "In pari materia — по одному и тому же предмету регулирования",
+  "Interest rei publicae ut sit finis litium — в интересах государства, чтобы споры завершались",
+  "Ius est ars boni et aequi — право есть искусство добра и справедливости",
+  "Lex posterior derogat priori — более поздний закон имеет приоритет перед прежним",
+  "Lex prospicit, non respicit — закон смотрит вперёд, а не назад",
+  "Locus regit actum — форма акта определяется правом места его совершения",
+  "Nemo dat quod non habet — никто не может передать то, чего у него нет",
+  "Nemo tenetur se ipsum accusare — никто не обязан свидетельствовать против себя",
+  "Non bis in idem — нельзя дважды преследовать за одно и то же",
+  "Omnia praesumuntur rite esse acta — предполагается, что действия совершены надлежащим образом",
+  "Par in parem non habet imperium — равный над равным власти не имеет",
+  "Prior tempore, potior iure — кто раньше по времени, тот сильнее по праву",
+  "Quod ab initio non valet, in tractu temporis non convalescit — недействительное с самого начала не становится действительным с течением времени",
+  "Quod omnes tangit, ab omnibus approbari debet — то, что касается всех, должно быть одобрено всеми",
+  "Salus populi suprema lex esto — благо народа да будет высшим законом",
+  "Semel heres, semper heres — однажды став наследником, остаёшься им",
+  "Superficies solo cedit — строение следует судьбе земельного участка",
+  "Volenti non fit iniuria — добровольно согласившемуся не причиняется правовая обида"
 ];
 
 function startHeaderQuotes(){
-  const el = document.getElementById('header-quote');
-  if(!el) return;
-  let i = 0;
-  el.textContent = LEGAL_QUOTES[0];
-  requestAnimationFrame(() => el.classList.add('show'));
+  const carousel = document.getElementById('legal-quotes');
+  const quote = document.getElementById('header-quote');
+  const latin = quote.querySelector('.quote-latin');
+  const translation = quote.querySelector('.quote-translation');
+  const announcement = carousel.querySelector('.quote-announcement');
+  const toggle = document.getElementById('quote-toggle');
+  const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const pointer = window.matchMedia('(hover: hover)');
+  let current = 0;
+  let playing = !motion.matches;
+  let timer;
+  let animation;
 
-  setInterval(() => {
-    el.classList.remove('show');
-    setTimeout(() => {
-      i = (i + 1) % LEGAL_QUOTES.length;
-      el.textContent = LEGAL_QUOTES[i];
-      el.classList.add('show');
-    }, 450);
-  }, 5500);
+  function showQuote(direction, manual = false){
+    current = (current + direction + LEGAL_QUOTES.length) % LEGAL_QUOTES.length;
+    const phrase = LEGAL_QUOTES[current];
+    const separator = phrase.indexOf(' — ');
+    latin.textContent = phrase.slice(0, separator);
+    translation.textContent = phrase.slice(separator + 3);
+    animation?.cancel();
+    if (!motion.matches) {
+      animation = quote.animate(
+        [{opacity: 0, transform: 'translateY(3px)'}, {opacity: 1, transform: 'translateY(0)'}],
+        {duration: 260, easing: 'ease-out'}
+      );
+    }
+    if (manual) announcement.textContent = phrase;
+  }
+
+  function schedule(){
+    clearInterval(timer);
+    if (playing) {
+      timer = setInterval(() => {
+        if (!document.hidden && !(pointer.matches && carousel.matches(':hover'))) showQuote(1);
+      }, 6500);
+    }
+  }
+
+  function updatePlayback(){
+    toggle.dataset.playing = String(playing);
+    const label = playing ? 'Приостановить смену фраз' : 'Запустить смену фраз';
+    toggle.setAttribute('aria-label', label);
+    toggle.title = label;
+    schedule();
+  }
+
+  document.getElementById('quote-previous').addEventListener('click', () => {
+    showQuote(-1, true);
+    schedule();
+  });
+  document.getElementById('quote-next').addEventListener('click', () => {
+    showQuote(1, true);
+    schedule();
+  });
+  toggle.addEventListener('click', () => {
+    playing = !playing;
+    updatePlayback();
+  });
+  motion.addEventListener('change', event => {
+    playing = !event.matches;
+    updatePlayback();
+  });
+  updatePlayback();
 }
 
 renderTags();
@@ -2413,6 +2549,6 @@ startHeaderQuotes();
 
 </script>
 
-<script src="./app.js?v=20261120-6"></script>
+<script src="./app.js?v=20261120-8"></script>
 </body>
 </html>
